@@ -7,13 +7,15 @@ class SurveyForm extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: Colors.white,
         title: Text("Survey Form"),
       ),
       body: Container(
-          margin: EdgeInsets.fromLTRB(30, 30, 30, 15),
+          margin: EdgeInsets.fromLTRB(width / 30, 10, width / 30, 15),
           child: Column(
             children: [
               Text(
@@ -62,7 +64,7 @@ class SurveyForm extends StatelessWidget {
               ),
               Container(
                 width: double.infinity,
-                margin: EdgeInsets.only(bottom: 30, top: 30),
+                margin: EdgeInsets.only(top: 30),
                 child: ElevatedButton(
                   onPressed: () {
                     // Navigator.push(

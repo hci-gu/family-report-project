@@ -9,10 +9,11 @@ class FamilyMember extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;
     return Container(
       width: double.infinity,
-      margin: EdgeInsets.only(left: 30, right: 30, bottom: 15),
+      margin: EdgeInsets.only(left: width / 30, right: width / 30, bottom: 15),
       child: ElevatedButton(
         child: Container(
           child: Row(

@@ -7,6 +7,7 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;
     var familyMemberNames = [
       "Shreyas Gupta",
@@ -22,7 +23,7 @@ class HomeScreen extends StatelessWidget {
           child: ListView(
             children: [
               Container(
-                margin: EdgeInsets.fromLTRB(30, 30, 30, 15),
+                margin: EdgeInsets.fromLTRB(width / 30, 30, width / 30, 15),
                 child: Column(
                   children: [
                     Row(
@@ -87,7 +88,7 @@ class HomeScreen extends StatelessWidget {
                       fontSize: height / 25, fontWeight: FontWeight.bold),
                 ),
                 width: double.infinity,
-                margin: EdgeInsets.fromLTRB(30, 0, 0, 15),
+                margin: EdgeInsets.fromLTRB(width / 40, 0, 0, 15),
               ),
               for (var family in familyMemberNames) FamilyMember(family, 'Son')
             ],

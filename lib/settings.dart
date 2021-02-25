@@ -5,6 +5,7 @@ class Settings extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;
     var settingsList = ["Edit Profile", "Feedback", "About", "Delete Account"];
     var iconsList = [
@@ -20,7 +21,7 @@ class Settings extends StatelessWidget {
           title: Text("Settings"),
         ),
         body: Container(
-          margin: EdgeInsets.all(30),
+          margin: EdgeInsets.all(width / 40),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
