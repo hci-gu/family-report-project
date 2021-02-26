@@ -37,19 +37,24 @@ class FamilyMember extends StatelessWidget {
               ),
               Column(
                 children: [
-                  Padding(
-                    padding: EdgeInsets.fromLTRB(0, 15, 0, 5),
-                    child: Text(
-                      familyMemberName,
-                      style:
-                          TextStyle(color: Colors.black, fontSize: height / 45),
+                  SizedBox(
+                    width: width / 2.3,
+                    child: Padding(
+                      padding: EdgeInsets.fromLTRB(0, 15, 0, 5),
+                      child: Text(
+                        familyMemberName,
+                        overflow: TextOverflow.fade,
+                        maxLines: 1,
+                        softWrap: false,
+                        style: TextStyle(
+                            color: Colors.black, fontSize: height / 45),
+                      ),
                     ),
                   ),
                   Padding(
                     padding: EdgeInsets.fromLTRB(0, 10, 0, 15),
                     child: Text(
                       familyMemberRelation,
-                      overflow: TextOverflow.ellipsis,
                       style: TextStyle(
                         color: Theme.of(context).primaryColor,
                         fontSize: height / 45,
