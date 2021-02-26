@@ -1,17 +1,17 @@
 import 'package:flutter/material.dart';
 import 'homescreen.dart';
+import 'regulargreenbutton.dart';
 
 class Onboarding extends StatelessWidget {
   const Onboarding({Key key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;
     return Container(
       child: Scaffold(
         body: Container(
-          margin: EdgeInsets.only(left: 30, right: 30),
+          margin: EdgeInsets.only(left: 30, right: 30, bottom: 30),
           child: Column(
             children: [
               Container(
@@ -23,51 +23,13 @@ class Onboarding extends StatelessWidget {
                 ),
               ),
               Spacer(),
-              Container(
-                width: double.infinity,
-                margin: EdgeInsets.only(bottom: 0, top: 30),
-                child: ElevatedButton(
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => HomeScreen()),
-                    );
-                  },
-                  child: Padding(
-                    padding: EdgeInsets.fromLTRB(0, 20, 0, 20),
-                    child: Text(
-                      "Continue with invite link",
-                      style: TextStyle(fontSize: 16),
-                    ),
-                  ),
-                  style: ElevatedButton.styleFrom(
-                    primary: Theme.of(context).primaryColor,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: new BorderRadius.circular(12.0),
-                    ),
-                  ),
-                ),
-              ),
-              Container(
-                width: double.infinity,
-                margin: EdgeInsets.only(bottom: 30, top: 30),
-                child: ElevatedButton(
-                  onPressed: () {},
-                  child: Padding(
-                    padding: EdgeInsets.fromLTRB(0, 20, 0, 20),
-                    child: Text(
-                      "Create Family ID",
-                      style: TextStyle(fontSize: 16),
-                    ),
-                  ),
-                  style: ElevatedButton.styleFrom(
-                    primary: Theme.of(context).primaryColor,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: new BorderRadius.circular(12.0),
-                    ),
-                  ),
-                ),
-              )
+              RegularGreenButton("Continue with Invite Link", () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => HomeScreen()),
+                );
+              }),
+              RegularGreenButton("Create Family ID", () {}),
             ],
           ),
         ),

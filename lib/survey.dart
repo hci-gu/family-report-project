@@ -1,3 +1,5 @@
+import 'package:family_report_project/regulargreenbutton.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter/material.dart';
 
 class SurveyForm extends StatelessWidget {
@@ -11,11 +13,19 @@ class SurveyForm extends StatelessWidget {
     double height = MediaQuery.of(context).size.height;
     return Scaffold(
       appBar: AppBar(
+        iconTheme: IconThemeData(
+          color: Theme.of(context).primaryColor,
+        ),
+        elevation: 0,
         backgroundColor: Colors.white,
-        title: Text("Survey Form"),
+        foregroundColor: Theme.of(context).primaryColor,
+        title: Text(
+          "Survey Form",
+          style: TextStyle(color: Theme.of(context).primaryColor),
+        ),
       ),
       body: Container(
-          margin: EdgeInsets.fromLTRB(width / 30, 10, width / 30, 15),
+          margin: EdgeInsets.fromLTRB(width / 30, 10, width / 30, 30),
           child: Column(
             children: [
               Text(
@@ -62,32 +72,7 @@ class SurveyForm extends StatelessWidget {
                   ],
                 ),
               ),
-              Container(
-                width: double.infinity,
-                margin: EdgeInsets.only(top: 30),
-                child: ElevatedButton(
-                  onPressed: () {
-                    // Navigator.push(
-                    //   context,
-                    //   MaterialPageRoute(
-                    //       builder: (context) => SurveyForm(familyMemberName)),
-                    // );
-                  },
-                  child: Padding(
-                    padding: EdgeInsets.fromLTRB(0, 20, 0, 20),
-                    child: Text(
-                      "Start",
-                      style: TextStyle(fontSize: 16),
-                    ),
-                  ),
-                  style: ElevatedButton.styleFrom(
-                    primary: Theme.of(context).primaryColor,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: new BorderRadius.circular(12.0),
-                    ),
-                  ),
-                ),
-              )
+              RegularGreenButton("Start", () {}),
             ],
           )),
     );

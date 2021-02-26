@@ -18,10 +18,19 @@ class Settings extends StatelessWidget {
     return Container(
       child: Scaffold(
         appBar: AppBar(
-          title: Text("Settings"),
+          iconTheme: IconThemeData(
+            color: Theme.of(context).primaryColor,
+          ),
+          elevation: 0,
+          backgroundColor: Colors.white,
+          foregroundColor: Theme.of(context).primaryColor,
+          title: Text(
+            "Settings",
+            style: TextStyle(color: Theme.of(context).primaryColor),
+          ),
         ),
         body: Container(
-          margin: EdgeInsets.all(width / 40),
+          margin: EdgeInsets.all(width / 20),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
