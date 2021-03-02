@@ -29,6 +29,8 @@ dependencies:
   cupertino_icons: ^1.0.2
   usage_stats: ^ 0.1.0
   app_usage: ^1.2.0
+  flutter_xlider: ^3.4.0
+  is_lock_screen: ^1.0.0
 
 dev_dependencies:
   flutter_test:

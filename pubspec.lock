@@ -74,6 +74,20 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.0"
+  flutter_xlider:
+    dependency: "direct main"
+    description:
+      name: flutter_xlider
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "3.4.0"
+  is_lock_screen:
+    dependency: "direct main"
+    description:
+      name: is_lock_screen
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.0.0"
   matcher:
     dependency: transitive
     description:
@@ -165,4 +179,4 @@ packages:
     version: "2.1.0"
 sdks:
   dart: ">=2.12.0-0.0 <3.0.0"
-  flutter: ">=1.10.0"
+  flutter: ">=1.12.0"
