@@ -7,6 +7,7 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var noOfPendingResponses = 2;
     double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;
     var familyMemberNames = [
@@ -27,7 +28,7 @@ class HomeScreen extends StatelessWidget {
                 child: Column(
                   children: [
                     Row(
-                      crossAxisAlignment: CrossAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.center,
                       children: <Widget>[
                         Flexible(
                           child: Padding(
@@ -42,18 +43,19 @@ class HomeScreen extends StatelessWidget {
                           ),
                         ),
                         IconButton(
-                            icon: Icon(
-                              Icons.settings,
-                              color: Colors.black,
-                              size: 32.0,
-                            ),
-                            onPressed: () {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => Settings()),
-                              );
-                            }),
+                          icon: Icon(
+                            Icons.settings,
+                            color: Colors.black,
+                            size: 32.0,
+                          ),
+                          onPressed: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => Settings()),
+                            );
+                          },
+                        ),
                       ],
                     ),
                     Text(
@@ -82,10 +84,25 @@ class HomeScreen extends StatelessWidget {
                 ),
               ),
               Container(
-                child: Text(
-                  "Members",
-                  style: TextStyle(
-                      fontSize: height / 25, fontWeight: FontWeight.bold),
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Text(
+                      "Members",
+                      style: TextStyle(
+                          fontSize: height / 25, fontWeight: FontWeight.bold),
+                    ),
+                    Padding(
+                      padding: EdgeInsets.only(left: 10),
+                      child: Text(
+                        "($noOfPendingResponses Pending Responses)",
+                        style: TextStyle(
+                          fontSize: height / 60,
+                          color: Theme.of(context).primaryColor,
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
                 width: double.infinity,
                 margin: EdgeInsets.fromLTRB(width / 40, 0, 0, 15),
