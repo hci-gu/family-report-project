@@ -1,6 +1,5 @@
 import 'package:family_report_project/regulargreenbutton.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/material.dart';
 
 class SurveyForm extends StatelessWidget {
   final String surveyResponsePersonName;
