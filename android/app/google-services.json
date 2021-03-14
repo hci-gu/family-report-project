@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "165202292774",
+    "project_id": "family-report",
+    "storage_bucket": "family-report.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:165202292774:android:91649f2fde1f24e9b376e7",
+        "android_client_info": {
+          "package_name": "com.gothuni.familyreport"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "165202292774-lp23u7mite3am1th421ca7mn9052h9e2.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBO-mn_wroUMpmNgXdZXjgL4bbTh2fX9zE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "165202292774-lp23u7mite3am1th421ca7mn9052h9e2.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
