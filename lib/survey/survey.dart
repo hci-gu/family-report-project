@@ -1,4 +1,5 @@
 import 'package:family_report_project/regulargreenbutton.dart';
+import 'package:family_report_project/survey/surveyusage.dart';
 import 'package:flutter/material.dart';
 
 class SurveyForm extends StatelessWidget {
@@ -71,7 +72,14 @@ class SurveyForm extends StatelessWidget {
                   ],
                 ),
               ),
-              RegularGreenButton("Start", () {}),
+              RegularGreenButton("Start", () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => SurveyUsage(
+                          familyMemberName: surveyResponsePersonName)),
+                );
+              }),
             ],
           )),
     );
