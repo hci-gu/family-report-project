@@ -29,12 +29,12 @@ dependencies:
   cupertino_icons: ^1.0.2
   usage_stats: ^ 0.1.0
   app_usage: ^1.2.0
-  flutter_xlider: ^3.4.0
   is_lock_screen: ^1.0.0
   provider: ^5.0.0
-  get_it: ^6.0.0
   firebase_core: ^1.0.1
+  firebase_auth: ^1.0.1
   cloud_firestore: ^1.0.1
+  uuid: ^3.0.4
 
 dev_dependencies:
   flutter_test:
