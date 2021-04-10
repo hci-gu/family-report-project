@@ -2,9 +2,16 @@ import 'package:family_report_project/survey/surveywl.dart';
 import 'package:flutter/material.dart';
 import '.././regulargreenbutton.dart';
 
-class SurveyPickup extends StatelessWidget {
+class SurveyPickup extends StatefulWidget {
   final String familyMemberName;
-  SurveyPickup(this.familyMemberName);
+  SurveyPickup({Key key, this.familyMemberName}) : super(key: key);
+
+  @override
+  _SurveyPickupState createState() => _SurveyPickupState();
+}
+
+class _SurveyPickupState extends State<SurveyPickup> {
+  double _currentSliderValue = 0;
   @override
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
@@ -17,11 +24,31 @@ class SurveyPickup extends StatelessWidget {
             Padding(
               padding: EdgeInsets.fromLTRB(width / 30, 10, width / 30, 30),
               child: Text(
-                "How many times does $familyMemberName pick up his/her smartphone in a day?",
+                "How many times does ${widget.familyMemberName} pick up his/her smartphone in a day?",
                 style: TextStyle(
                   fontSize: height / 30,
                 ),
               ),
+            ),
+            Spacer(),
+            Container(
+              child: Text(
+                "${_currentSliderValue.toInt()} Pickups",
+                style: TextStyle(fontSize: width / 15),
+              ),
+            ),
+            Slider(
+              value: _currentSliderValue,
+              min: 0,
+              max: 400,
+              divisions: 400,
+              activeColor: Theme.of(context).primaryColor,
+              label: _currentSliderValue.round().toString(),
+              onChanged: (double value) {
+                setState(() {
+                  _currentSliderValue = value;
+                });
+              },
             ),
             Spacer(),
             Container(
@@ -32,7 +59,8 @@ class SurveyPickup extends StatelessWidget {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                        builder: (context) => SurveyWL(familyMemberName)),
+                        builder: (context) => SurveyWL(
+                            familyMemberName: widget.familyMemberName)),
                   );
                 },
               ),

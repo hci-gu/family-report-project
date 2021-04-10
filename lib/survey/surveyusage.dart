@@ -11,6 +11,8 @@ class SurveyUsage extends StatefulWidget {
 }
 
 class _SurveyUsageState extends State<SurveyUsage> {
+  double _currentSliderValue = 0;
+
   @override
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
@@ -23,11 +25,31 @@ class _SurveyUsageState extends State<SurveyUsage> {
             Padding(
               padding: EdgeInsets.fromLTRB(width / 30, 10, width / 30, 30),
               child: Text(
-                "For how many hours does $widget.familyMemberName use his/her smartphone in a day?",
+                "For how many hours does in a day does ${widget.familyMemberName} use his/her smartphone?",
                 style: TextStyle(
                   fontSize: height / 30,
                 ),
               ),
+            ),
+            Spacer(),
+            Container(
+              child: Text(
+                "${(_currentSliderValue ~/ 60)} Hour, ${(_currentSliderValue % 60).toInt()} Minutes",
+                style: TextStyle(fontSize: width / 15),
+              ),
+            ),
+            Slider(
+              value: _currentSliderValue,
+              min: 0,
+              max: 1440,
+              divisions: 96,
+              activeColor: Theme.of(context).primaryColor,
+              label: _currentSliderValue.round().toString(),
+              onChanged: (double value) {
+                setState(() {
+                  _currentSliderValue = value;
+                });
+              },
             ),
             Spacer(),
             Container(
@@ -38,8 +60,8 @@ class _SurveyUsageState extends State<SurveyUsage> {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                        builder: (context) =>
-                            SurveyPickup(widget.familyMemberName)),
+                        builder: (context) => SurveyPickup(
+                            familyMemberName: widget.familyMemberName)),
                   );
                 },
               ),
