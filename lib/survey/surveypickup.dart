@@ -34,21 +34,27 @@ class _SurveyPickupState extends State<SurveyPickup> {
             Container(
               child: Text(
                 "${_currentSliderValue.toInt()} Pickups",
-                style: TextStyle(fontSize: width / 15),
+                style: TextStyle(
+                    fontSize: width / 15,
+                    color: Theme.of(context).primaryColor),
               ),
             ),
-            Slider(
-              value: _currentSliderValue,
-              min: 0,
-              max: 400,
-              divisions: 400,
-              activeColor: Theme.of(context).primaryColor,
-              label: _currentSliderValue.round().toString(),
-              onChanged: (double value) {
-                setState(() {
-                  _currentSliderValue = value;
-                });
-              },
+            SliderTheme(
+              data: SliderTheme.of(context)
+                  .copyWith(showValueIndicator: ShowValueIndicator.never),
+              child: Slider(
+                value: _currentSliderValue,
+                min: 0,
+                max: 400,
+                divisions: 400,
+                activeColor: Theme.of(context).primaryColor,
+                label: _currentSliderValue.round().toString(),
+                onChanged: (double value) {
+                  setState(() {
+                    _currentSliderValue = value;
+                  });
+                },
+              ),
             ),
             Spacer(),
             Container(

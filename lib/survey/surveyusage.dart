@@ -35,21 +35,27 @@ class _SurveyUsageState extends State<SurveyUsage> {
             Container(
               child: Text(
                 "${(_currentSliderValue ~/ 60)} Hour, ${(_currentSliderValue % 60).toInt()} Minutes",
-                style: TextStyle(fontSize: width / 15),
+                style: TextStyle(
+                    fontSize: width / 15,
+                    color: Theme.of(context).primaryColor),
               ),
             ),
-            Slider(
-              value: _currentSliderValue,
-              min: 0,
-              max: 1440,
-              divisions: 96,
-              activeColor: Theme.of(context).primaryColor,
-              label: _currentSliderValue.round().toString(),
-              onChanged: (double value) {
-                setState(() {
-                  _currentSliderValue = value;
-                });
-              },
+            SliderTheme(
+              data: SliderTheme.of(context)
+                  .copyWith(showValueIndicator: ShowValueIndicator.never),
+              child: Slider(
+                value: _currentSliderValue,
+                min: 0,
+                max: 1440,
+                divisions: 96,
+                activeColor: Theme.of(context).primaryColor,
+                label: _currentSliderValue.round().toString(),
+                onChanged: (double value) {
+                  setState(() {
+                    _currentSliderValue = value;
+                  });
+                },
+              ),
             ),
             Spacer(),
             Container(
