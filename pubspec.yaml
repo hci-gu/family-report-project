@@ -34,7 +34,10 @@ dependencies:
   firebase_core: ^1.0.1
   firebase_auth: ^1.0.1
   cloud_firestore: ^1.0.1
+  permission_handler: ^6.1.1
+  firebase_dynamic_links: ^0.8.0
   uuid: ^3.0.4
+  image_picker: ^0.7.4
 
 dev_dependencies:
   flutter_test:
