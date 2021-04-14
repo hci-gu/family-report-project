@@ -42,7 +42,7 @@ class FamilyMember {
     this.totalScreenTime = totalScreenTime;
     this.hourlyScreenTimeBreakdown = hourlyScreenTimeBreakdown;
   }
-  Map toJSON() {
+  Map<String, dynamic> toJSON() {
     return {
       'name': name ?? '',
       'relation': relation ?? '',
@@ -58,6 +58,7 @@ class FamilyMember {
   }
 
   FamilyMember.fromJSON(Map<String, dynamic> json) {
+    print(json);
     id = json['id'];
     name = json['name'];
     relation = json['relation'];
