@@ -1,5 +1,5 @@
-import 'package:family_report_project/regulargreenbutton.dart';
-import 'package:family_report_project/survey/surveyusage.dart';
+import '../regulargreenbutton.dart';
+import './surveyusage.dart';
 import 'package:flutter/material.dart';
 
 class SurveyForm extends StatelessWidget {

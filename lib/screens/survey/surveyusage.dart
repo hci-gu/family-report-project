@@ -1,30 +1,31 @@
-import 'package:family_report_project/survey/surveywl.dart';
+import './surveypickup.dart';
 import 'package:flutter/material.dart';
 import '.././regulargreenbutton.dart';
 
-class SurveyPickup extends StatefulWidget {
+class SurveyUsage extends StatefulWidget {
   final String familyMemberName;
-  SurveyPickup({Key key, this.familyMemberName}) : super(key: key);
+  SurveyUsage({Key key, this.familyMemberName}) : super(key: key);
 
   @override
-  _SurveyPickupState createState() => _SurveyPickupState();
+  _SurveyUsageState createState() => _SurveyUsageState();
 }
 
-class _SurveyPickupState extends State<SurveyPickup> {
+class _SurveyUsageState extends State<SurveyUsage> {
   double _currentSliderValue = 0;
+
   @override
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;
     return Scaffold(
-      appBar: AppBar(title: Text("Question #2")),
+      appBar: AppBar(title: Text("Question #1")),
       body: Container(
         child: Column(
           children: [
             Padding(
               padding: EdgeInsets.fromLTRB(width / 30, 10, width / 30, 30),
               child: Text(
-                "How many times does ${widget.familyMemberName} pick up his/her smartphone in a day?",
+                "For how many hours does in a day does ${widget.familyMemberName} use his/her smartphone?",
                 style: TextStyle(
                   fontSize: height / 30,
                 ),
@@ -33,7 +34,7 @@ class _SurveyPickupState extends State<SurveyPickup> {
             Spacer(),
             Container(
               child: Text(
-                "${_currentSliderValue.toInt()} Pickups",
+                "${(_currentSliderValue ~/ 60)} Hour, ${(_currentSliderValue % 60).toInt()} Minutes",
                 style: TextStyle(
                     fontSize: width / 15,
                     color: Theme.of(context).primaryColor),
@@ -45,8 +46,8 @@ class _SurveyPickupState extends State<SurveyPickup> {
               child: Slider(
                 value: _currentSliderValue,
                 min: 0,
-                max: 400,
-                divisions: 400,
+                max: 1440,
+                divisions: 96,
                 activeColor: Theme.of(context).primaryColor,
                 label: _currentSliderValue.round().toString(),
                 onChanged: (double value) {
@@ -65,7 +66,7 @@ class _SurveyPickupState extends State<SurveyPickup> {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                        builder: (context) => SurveyWL(
+                        builder: (context) => SurveyPickup(
                             familyMemberName: widget.familyMemberName)),
                   );
                 },

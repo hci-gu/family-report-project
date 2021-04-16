@@ -9,7 +9,7 @@ class RegularGreenButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       width: double.infinity,
-      margin: EdgeInsets.only(top: 30),
+      margin: EdgeInsets.only(top: 15),
       child: ElevatedButton(
         onPressed: buttonOnClick,
         child: Padding(

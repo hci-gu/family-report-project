@@ -1,22 +1,26 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import '../models/model.dart';
 import './familymember.dart';
+import './screentimeupload.dart';
 import './settings.dart';
+import './usage.dart';
+import 'dart:io';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({Key key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    var noOfPendingResponses = 2;
+    final familyMemberList = Provider.of<List<FamilyMember>>(context);
+    var noOfPendingResponses = 0;
+    for (int i = 0; i < familyMemberList.length; i++) {
+      if (familyMemberList[i].isSurveyFilled == false) {
+        noOfPendingResponses += 1;
+      }
+    }
     double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;
-    var familyMemberNames = [
-      "Shreyas Gupta",
-      "Srinivas Kukkadapu",
-      "Swaroopa Gupta",
-      "Shreshta Gupta",
-      "Shourya Gupta"
-    ];
     return Container(
       child: Scaffold(
         body: Container(
@@ -79,7 +83,52 @@ class HomeScreen extends StatelessWidget {
                               fontSize: height / 37),
                         ),
                       ),
-                    )
+                    ),
+                    Container(
+                      width: double.infinity,
+                      margin: EdgeInsets.only(top: 10),
+                      child: TextButton.icon(
+                        style: ButtonStyle(alignment: Alignment.centerLeft),
+                        onPressed: () {
+                          Navigator.of(context).push(MaterialPageRoute(
+                              builder: (context) => UsageData()));
+                        },
+                        icon: Icon(
+                          Icons.share,
+                          color: Theme.of(context).primaryColor,
+                        ),
+                        label: Text(
+                          "Show usage data",
+                          style: TextStyle(
+                              color: Theme.of(context).primaryColor,
+                              fontSize: height / 37),
+                        ),
+                      ),
+                    ),
+                    (Platform.isIOS == true)
+                        ? Container(
+                            width: double.infinity,
+                            margin: EdgeInsets.only(top: 10),
+                            child: TextButton.icon(
+                              style:
+                                  ButtonStyle(alignment: Alignment.centerLeft),
+                              onPressed: () {
+                                Navigator.of(context).push(MaterialPageRoute(
+                                    builder: (context) => ScreenTimeUpload()));
+                              },
+                              icon: Icon(
+                                Icons.upload_file,
+                                color: Theme.of(context).primaryColor,
+                              ),
+                              label: Text(
+                                "Upload screentime data",
+                                style: TextStyle(
+                                    color: Theme.of(context).primaryColor,
+                                    fontSize: height / 37),
+                              ),
+                            ),
+                          )
+                        : Container(),
                   ],
                 ),
               ),
@@ -107,7 +156,15 @@ class HomeScreen extends StatelessWidget {
                 width: double.infinity,
                 margin: EdgeInsets.fromLTRB(width / 40, 0, 0, 15),
               ),
-              for (var family in familyMemberNames) FamilyMember(family, 'Son')
+              // (familyMemberList != null)
+              //     ? ListView.builder(
+              //         itemCount: familyMemberList.length,
+              //         itemBuilder: (context, index) {
+              //           return FamilyMemberWidget(familyMemberList[index].name,
+              //               familyMemberList[index].relation);
+              //         },
+              //       )
+              //     : Center(child: CircularProgressIndicator()),
             ],
           ),
         ),

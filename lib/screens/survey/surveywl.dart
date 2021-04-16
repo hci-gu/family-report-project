@@ -1,7 +1,6 @@
-import 'package:family_report_project/homescreen.dart';
+import './../homescreen.dart';
 import 'package:flutter/material.dart';
 import './../regulargreenbutton.dart';
-import './../homescreen.dart';
 
 enum SmartphoneUsageType { work, leisure }
 
@@ -61,7 +60,7 @@ class _SurveyWLState extends State<SurveyWL> {
             Container(
               margin: EdgeInsets.fromLTRB(width / 30, 10, width / 30, 30),
               child: RegularGreenButton(
-                "Continue",
+                "Finish Survey",
                 () {
                   Navigator.push(
                     context,

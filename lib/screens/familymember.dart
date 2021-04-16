@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
-import 'survey.dart';
+import 'survey/survey.dart';
 
-class FamilyMember extends StatelessWidget {
+class FamilyMemberWidget extends StatelessWidget {
   final String familyMemberName;
   final String familyMemberRelation;
+  var isSurveyFilled = false;
 
-  FamilyMember(this.familyMemberName, this.familyMemberRelation);
+  FamilyMemberWidget(this.familyMemberName, this.familyMemberRelation);
 
   @override
   Widget build(BuildContext context) {
@@ -19,7 +20,7 @@ class FamilyMember extends StatelessWidget {
           child: Row(
             children: [
               Container(
-                margin: EdgeInsets.only(right: 15),
+                margin: EdgeInsets.only(left: 5, right: 15),
                 decoration: BoxDecoration(
                   color: Theme.of(context).primaryColor,
                   shape: BoxShape.circle,
@@ -66,26 +67,35 @@ class FamilyMember extends StatelessWidget {
               ),
               Spacer(),
               Container(
-                child: Row(
-                  children: [
-                    Text(
-                      "Survey",
-                      style: TextStyle(
-                        color: Theme.of(context).primaryColor,
-                        fontSize: height / 50,
+                child: (isSurveyFilled == false)
+                    ? Row(
+                        children: [
+                          Text(
+                            "Survey",
+                            style: TextStyle(
+                              color: Theme.of(context).primaryColor,
+                              fontSize: height / 50,
+                            ),
+                            textAlign: TextAlign.right,
+                          ),
+                          Container(
+                            child: Icon(
+                              Icons.east,
+                              color: Theme.of(context).primaryColor,
+                              size: height / 40,
+                            ),
+                            margin: EdgeInsets.fromLTRB(10, 0, 0, 0),
+                          )
+                        ],
+                      )
+                    : Text(
+                        "Done",
+                        style: TextStyle(
+                          color: Theme.of(context).primaryColor,
+                          fontSize: height / 50,
+                        ),
+                        textAlign: TextAlign.right,
                       ),
-                      textAlign: TextAlign.right,
-                    ),
-                    Container(
-                      child: Icon(
-                        Icons.east,
-                        color: Theme.of(context).primaryColor,
-                        size: height / 40,
-                      ),
-                      margin: EdgeInsets.fromLTRB(10, 0, 0, 0),
-                    )
-                  ],
-                ),
               )
             ],
           ),

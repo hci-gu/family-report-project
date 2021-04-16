@@ -94,6 +94,7 @@ class FamilyMemberProvider with ChangeNotifier {
   }
 
   saveFamilyMember() {
+    print(name);
     print(_id);
     if (_id == null) {
       //create new family member
