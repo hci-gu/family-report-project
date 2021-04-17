@@ -3,21 +3,21 @@
 <plist version="1.0">
 <dict>
 	<key>CLIENT_ID</key>
-	<string>165202292774-g467vfn4g1a5amvoph9tmbns8rjbmpla.apps.googleusercontent.com</string>
+	<string>1001131204900-2k3s63ohlvb9v8bilpn7mf8fr5k9sb4l.apps.googleusercontent.com</string>
 	<key>REVERSED_CLIENT_ID</key>
-	<string>com.googleusercontent.apps.165202292774-g467vfn4g1a5amvoph9tmbns8rjbmpla</string>
+	<string>com.googleusercontent.apps.1001131204900-2k3s63ohlvb9v8bilpn7mf8fr5k9sb4l</string>
 	<key>API_KEY</key>
-	<string>AIzaSyCoLM5WZxWW0lwz6SiNiLiRhdNG8Pj_ZiE</string>
+	<string>AIzaSyCqIctV7GnNHpqZJ22ePV7kslowgMSEXbw</string>
 	<key>GCM_SENDER_ID</key>
-	<string>165202292774</string>
+	<string>1001131204900</string>
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
-	<string>com.gothuni.familyreport</string>
+	<string>com.example.brewCrewglados</string>
 	<key>PROJECT_ID</key>
-	<string>family-report</string>
+	<string>brew-test-app</string>
 	<key>STORAGE_BUCKET</key>
-	<string>family-report.appspot.com</string>
+	<string>brew-test-app.appspot.com</string>
 	<key>IS_ADS_ENABLED</key>
 	<false></false>
 	<key>IS_ANALYTICS_ENABLED</key>
@@ -29,6 +29,6 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:165202292774:ios:b4a14defd520c590b376e7</string>
+	<string>1:1001131204900:ios:a296822f67123f4e5493b1</string>
 </dict>
 </plist>
