@@ -3,9 +3,14 @@ import '../regulargreenbutton.dart';
 import './register.dart';
 import './sign_in.dart';
 
-class Onboarding extends StatelessWidget {
-  const Onboarding({Key key}) : super(key: key);
+class Onboarding extends StatefulWidget {
+  Onboarding({Key key}) : super(key: key);
 
+  @override
+  _OnboardingState createState() => _OnboardingState();
+}
+
+class _OnboardingState extends State<Onboarding> {
   @override
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;

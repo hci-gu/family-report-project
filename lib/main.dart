@@ -23,6 +23,7 @@ class MyApp extends StatelessWidget {
     // final firestoreService = Api('family1');
     return StreamProvider<FamilyMember>.value(
       value: AuthService().familyMemberUser,
+      initialData: null,
       child: MaterialApp(
         home: Wrapper(),
         theme: ThemeData(

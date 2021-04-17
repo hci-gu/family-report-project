@@ -12,13 +12,13 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final familyMemberList = Provider.of<List<FamilyMember>>(context);
+    // final familyMemberList = Provider.of<List<FamilyMember>>(context);
     var noOfPendingResponses = 0;
-    for (int i = 0; i < familyMemberList.length; i++) {
-      if (familyMemberList[i].isSurveyFilled == false) {
-        noOfPendingResponses += 1;
-      }
-    }
+    // for (int i = 0; i < familyMemberList.length; i++) {
+    //   if (familyMemberList[i].isSurveyFilled == false) {
+    //     noOfPendingResponses += 1;
+    //   }
+    // }
     double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;
     return Container(

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../models/model.dart';
+import '../services/auth.dart';
 
 class Settings extends StatefulWidget {
   // final FamilyMember familyMember;
@@ -10,6 +11,8 @@ class Settings extends StatefulWidget {
 }
 
 class _SettingsState extends State<Settings> {
+  final AuthService _auth = AuthService();
+
   @override
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
@@ -45,6 +48,14 @@ class _SettingsState extends State<Settings> {
               //   Navigator.of(context).push(MaterialPageRoute(
               //       builder: (context) => EditFamily(familyMemberList[index])));
               // },
+            ),
+            ListTile(
+              leading: Icon(Icons.face),
+              title: Text("Sign Out"),
+              onTap: () async {
+                await _auth.signOut();
+                Navigator.pop(context);
+              },
             ),
             // body: Container(
             //   margin: EdgeInsets.all(width / 20),
