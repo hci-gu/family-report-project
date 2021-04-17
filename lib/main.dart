@@ -2,14 +2,9 @@ import 'package:family_report_project/models/model.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:provider/provider.dart';
-import 'providers/familyMemberProvider.dart';
 import './screens/wrapper.dart';
-import 'services/api.dart';
 import './services/auth.dart';
 import './models/model.dart';
-// import 'package:firebase_auth/firebase_auth.dart';
-// import 'package:firebase_dynamic_links/firebase_dynamic_links.dart';
-// import 'testing/testFamily.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();

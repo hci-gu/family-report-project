@@ -2,15 +2,15 @@ import 'package:flutter/material.dart';
 import '../models/model.dart';
 import '../services/auth.dart';
 
-class Settings extends StatefulWidget {
+class SettingsPage extends StatefulWidget {
   // final FamilyMember familyMember;
-  Settings({Key key}) : super(key: key);
+  SettingsPage({Key key}) : super(key: key);
 
   @override
   _SettingsState createState() => _SettingsState();
 }
 
-class _SettingsState extends State<Settings> {
+class _SettingsState extends State<SettingsPage> {
   final AuthService _auth = AuthService();
 
   @override
@@ -35,7 +35,7 @@ class _SettingsState extends State<Settings> {
           backgroundColor: Colors.white,
           foregroundColor: Theme.of(context).primaryColor,
           title: Text(
-            "Settings",
+            "SettingsPage",
             style: TextStyle(color: Theme.of(context).primaryColor),
           ),
         ),

@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
+import './../models/model.dart';
 import 'survey/survey.dart';
 
 class FamilyMemberWidget extends StatelessWidget {
-  final String familyMemberName;
-  final String familyMemberRelation;
-  var isSurveyFilled = false;
+  final FamilyMember familyMember;
 
-  FamilyMemberWidget(this.familyMemberName, this.familyMemberRelation);
+  FamilyMemberWidget({this.familyMember});
 
   @override
   Widget build(BuildContext context) {
@@ -28,7 +27,7 @@ class FamilyMemberWidget extends StatelessWidget {
                 child: Padding(
                   padding: EdgeInsets.all(10),
                   child: Text(
-                    familyMemberName
+                    familyMember.name
                         .split(" ")
                         .reduce((curr, next) => curr[0] + next[0])
                         .toUpperCase(),
@@ -38,24 +37,27 @@ class FamilyMemberWidget extends StatelessWidget {
               ),
               Column(
                 children: [
-                  SizedBox(
-                    width: width / 2.3,
-                    child: Padding(
-                      padding: EdgeInsets.fromLTRB(0, 15, 0, 5),
-                      child: Text(
-                        familyMemberName,
-                        overflow: TextOverflow.fade,
-                        maxLines: 1,
-                        softWrap: false,
-                        style: TextStyle(
-                            color: Colors.black, fontSize: height / 45),
-                      ),
-                    ),
-                  ),
+                  // SizedBox(
+                  //   width: width / 2.3,
+                  //   child: Padding(
+                  //     padding: EdgeInsets.fromLTRB(0, 15, 0, 5),
+                  //     child: Text(
+                  //       familyMemberName,
+                  //       overflow: TextOverflow.fade,
+                  //       maxLines: 1,
+                  //       softWrap: false,
+                  //       style: TextStyle(
+                  //           color: Colors.black, fontSize: height / 45),
+                  //     ),
+                  //   ),
+                  // ),
                   Padding(
                     padding: EdgeInsets.fromLTRB(0, 10, 0, 15),
                     child: Text(
-                      familyMemberRelation,
+                      familyMember.name,
+                      overflow: TextOverflow.ellipsis,
+                      maxLines: 1,
+                      softWrap: false,
                       style: TextStyle(
                         color: Theme.of(context).primaryColor,
                         fontSize: height / 45,
@@ -67,7 +69,7 @@ class FamilyMemberWidget extends StatelessWidget {
               ),
               Spacer(),
               Container(
-                child: (isSurveyFilled == false)
+                child: (familyMember.isSurveyFilled == false)
                     ? Row(
                         children: [
                           Text(
@@ -110,7 +112,7 @@ class FamilyMemberWidget extends StatelessWidget {
           Navigator.push(
             context,
             MaterialPageRoute(
-                builder: (context) => SurveyForm(familyMemberName)),
+                builder: (context) => SurveyForm(familyMember.name)),
           );
         },
       ),

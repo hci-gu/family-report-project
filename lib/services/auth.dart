@@ -1,6 +1,8 @@
 import 'package:family_report_project/models/model.dart';
 import 'package:family_report_project/services/database.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import '../helpers/sharedpreferenceshelper.dart';
 
 class AuthService {
   final FirebaseAuth _auth = FirebaseAuth.instance;
@@ -17,25 +19,18 @@ class AuthService {
         .map((User user) => _familyMemberFromFirebaseUser(user));
   }
 
-  //sign in anon (for the sake of it)
-  // Future signInAnon() async {
-  //   try {
-  //     UserCredential result = await _auth.signInAnonymously();
-  //     User user = result.user;
-  //     return _familyMemberFromFirebaseUser(user);
-  //   } catch (e) {
-  //     print(e);
-  //   }
-  // }
-  //sign in with email and password
-
   //register with email and password\
   Future registerWithEmailAndPassword(
       String name, String email, String password, String familyId) async {
     try {
       UserCredential result = await _auth.createUserWithEmailAndPassword(
           email: email, password: password);
+      // obtain shared preferences
+      Future<bool> test =
+          SharedPreferencesHelper.setFamilyCollectionName(familyId);
+      test.then((value) => (value) ? print("done!!!!") : print("fuck"));
 
+      print(familyId);
       await DatabaseService(familyId, uid: result.user.uid)
           .createFamilyMemberDataWithName(name);
       return _familyMemberFromFirebaseUser(result.user);
