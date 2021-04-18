@@ -16,20 +16,41 @@ class DatabaseService {
   }
 
   Future createFamilyMemberDataWithName(String name) async {
-    return await ref.doc(uid).set({'name': name, 'id': uid});
+    return await ref.doc(uid).set({
+      'name': name,
+      'id': uid,
+      'isSurveyFilled': false,
+      'relation': '',
+      'age': '',
+      'gender': '',
+      'surveyQuestionResponses': new Map(),
+      'qualitativeStudyResponses': new Map(),
+      'totalScreenTime': 0.0,
+      'hourlyScreenTimeBreakdown': [],
+    });
   }
 
   Stream<List<FamilyMember>> get familyMemberList {
     return ref.snapshots().map(_familyMemberListFromSnapshot);
   }
 
+  // Stream<FamilyMember> familyMember(String id) {
+  //   return ref.doc(id);
+  // }
+
   List<FamilyMember> _familyMemberListFromSnapshot(QuerySnapshot snapshot) {
     return snapshot.docs.map((doc) {
-      // print(doc.data()['id']);
-      // print(doc.data()['name']);
       return FamilyMember(
         id: doc.data()['id'],
         name: doc.data()['name'],
+        isSurveyFilled: doc.data()['isSurveyFilled'],
+        totalScreenTime: doc.data()['totalScreenTime'],
+        gender: doc.data()['gender'],
+        age: doc.data()['age'],
+        relation: doc.data()['relation'],
+        surveyQuestionResponses: doc.data()['surveyQuestionResponses'],
+        qualitativeStudyResponses: doc.data()['qualitativeStudyResponses'],
+        hourlyScreenTimeBreakdown: doc.data()['hourlyScreenTimeBreakdown'],
       );
     }).toList();
   }
