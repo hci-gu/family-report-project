@@ -1,12 +1,14 @@
 import './../homescreen.dart';
 import 'package:flutter/material.dart';
 import './../regulargreenbutton.dart';
+import '../../models/model.dart';
 
 enum SmartphoneUsageType { work, leisure }
 
 class SurveyWL extends StatefulWidget {
-  final String familyMemberName;
-  SurveyWL({Key key, this.familyMemberName}) : super(key: key);
+  final FamilyMember familyMember;
+
+  SurveyWL({Key key, this.familyMember}) : super(key: key);
 
   @override
   _SurveyWLState createState() => _SurveyWLState();
@@ -26,7 +28,7 @@ class _SurveyWLState extends State<SurveyWL> {
             Padding(
               padding: EdgeInsets.fromLTRB(width / 30, 10, width / 30, 30),
               child: Text(
-                "For what purpose do you think ${widget.familyMemberName} mostly uses his/her smartphone?",
+                "For what purpose do you think ${widget.familyMember.name} mostly uses ${(widget.familyMember.gender == "female") ? "her" : "his"} smartphone for?",
                 style: TextStyle(
                   fontSize: height / 30,
                 ),

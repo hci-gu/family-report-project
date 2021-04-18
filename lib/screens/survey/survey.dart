@@ -1,11 +1,12 @@
 import '../regulargreenbutton.dart';
 import './surveyusage.dart';
 import 'package:flutter/material.dart';
+import '../../models/model.dart';
 
 class SurveyForm extends StatelessWidget {
-  final String surveyResponsePersonName;
+  final FamilyMember familyMember;
 
-  SurveyForm(this.surveyResponsePersonName);
+  SurveyForm(this.familyMember);
 
   @override
   Widget build(BuildContext context) {
@@ -76,8 +77,8 @@ class SurveyForm extends StatelessWidget {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                      builder: (context) => SurveyUsage(
-                          familyMemberName: surveyResponsePersonName)),
+                      builder: (context) =>
+                          SurveyUsage(familyMember: familyMember)),
                 );
               }),
             ],

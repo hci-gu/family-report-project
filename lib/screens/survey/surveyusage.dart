@@ -1,10 +1,11 @@
 import './surveypickup.dart';
 import 'package:flutter/material.dart';
 import '.././regulargreenbutton.dart';
+import '../../models/model.dart';
 
 class SurveyUsage extends StatefulWidget {
-  final String familyMemberName;
-  SurveyUsage({Key key, this.familyMemberName}) : super(key: key);
+  final FamilyMember familyMember;
+  SurveyUsage({Key key, this.familyMember}) : super(key: key);
 
   @override
   _SurveyUsageState createState() => _SurveyUsageState();
@@ -25,7 +26,7 @@ class _SurveyUsageState extends State<SurveyUsage> {
             Padding(
               padding: EdgeInsets.fromLTRB(width / 30, 10, width / 30, 30),
               child: Text(
-                "For how many hours does in a day does ${widget.familyMemberName} use his/her smartphone?",
+                "For how many hours does in a day does ${widget.familyMember.name} use ${(widget.familyMember.gender == "female") ? "her" : "his"} smartphone?",
                 style: TextStyle(
                   fontSize: height / 30,
                 ),
@@ -66,8 +67,8 @@ class _SurveyUsageState extends State<SurveyUsage> {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                        builder: (context) => SurveyPickup(
-                            familyMemberName: widget.familyMemberName)),
+                        builder: (context) =>
+                            SurveyPickup(familyMember: widget.familyMember)),
                   );
                 },
               ),
