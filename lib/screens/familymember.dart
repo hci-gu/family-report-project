@@ -25,32 +25,28 @@ class FamilyMemberWidget extends StatelessWidget {
                   shape: BoxShape.circle,
                 ),
                 child: Padding(
-                  padding: EdgeInsets.all(10),
+                  padding: EdgeInsets.all(15),
                   child: Text(
-                    familyMember.name
-                        .split(" ")
-                        .reduce((curr, next) => curr[0] + next[0])
-                        .toUpperCase(),
-                    style: TextStyle(fontSize: height / 45),
+                    familyMember.name[0],
+                    style: TextStyle(fontSize: height / 35),
                   ),
                 ),
               ),
               Column(
                 children: [
-                  // SizedBox(
-                  //   width: width / 2.3,
-                  //   child: Padding(
-                  //     padding: EdgeInsets.fromLTRB(0, 15, 0, 5),
-                  //     child: Text(
-                  //       familyMemberName,
-                  //       overflow: TextOverflow.fade,
-                  //       maxLines: 1,
-                  //       softWrap: false,
-                  //       style: TextStyle(
-                  //           color: Colors.black, fontSize: height / 45),
-                  //     ),
-                  //   ),
-                  // ),
+                  Padding(
+                    padding: EdgeInsets.fromLTRB(0, 10, 0, 10),
+                    child: Text(
+                      familyMember.name,
+                      overflow: TextOverflow.ellipsis,
+                      maxLines: 1,
+                      softWrap: false,
+                      style: TextStyle(
+                        color: Colors.black,
+                        fontSize: height / 35,
+                      ),
+                    ),
+                  ),
                   Padding(
                     padding: EdgeInsets.fromLTRB(0, 10, 0, 15),
                     child: Text(
@@ -111,8 +107,7 @@ class FamilyMemberWidget extends StatelessWidget {
         onPressed: () {
           Navigator.push(
             context,
-            MaterialPageRoute(
-                builder: (context) => SurveyForm(familyMember.name)),
+            MaterialPageRoute(builder: (context) => SurveyForm(familyMember)),
           );
         },
       ),

@@ -16,6 +16,9 @@ class FamilyMember {
     this.relation,
     this.age,
     this.gender,
+    this.qualitativeStudyResponses,
+    this.surveyQuestionResponses,
+    this.hourlyScreenTimeBreakdown,
     isSurveyFilled = false,
     totalScreenTime = 0.0,
   });
