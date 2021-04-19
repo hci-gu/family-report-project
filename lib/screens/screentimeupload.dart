@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import './regulargreenbutton.dart';
 import 'dart:io';
 import 'package:image_picker/image_picker.dart';
+import 'package:firebase_storage/firebase_storage.dart';
+import '../helpers/sharedpreferenceshelper.dart';
 
 class ScreenTimeUpload extends StatefulWidget {
   ScreenTimeUpload({Key key}) : super(key: key);
@@ -14,6 +16,7 @@ class _ScreenTimeUploadState extends State<ScreenTimeUpload> {
   File _image;
   final picker = ImagePicker();
 
+  //get video from photo library
   Future getImage() async {
     final pickedFile = await picker.getVideo(source: ImageSource.gallery);
 
@@ -24,6 +27,35 @@ class _ScreenTimeUploadState extends State<ScreenTimeUpload> {
         print('No image selected.');
       }
     });
+
+    uploadToStorage();
+  }
+
+  //upload video to firebase storage
+  Future uploadToStorage() async {
+    try {
+      Future<String> familyUID = SharedPreferencesHelper.getFamilyMemberUid();
+      final DateTime now = DateTime.now();
+      final int millSeconds = now.millisecondsSinceEpoch;
+      final String month = now.month.toString();
+      final String date = now.day.toString();
+      String storageId;
+      familyUID.then((value) {
+        storageId = (millSeconds.toString() + value);
+      });
+
+      final String today = ('$month-$date');
+
+      Reference ref = FirebaseStorage.instance
+          .ref()
+          .child("videos")
+          .child("$today - $storageId");
+      UploadTask uploadTask =
+          ref.putFile(_image, SettableMetadata(contentType: 'video/mp4'));
+      uploadTask.then((res) => print(res.ref.getDownloadURL()));
+    } catch (error) {
+      print(error);
+    }
   }
 
   @override
@@ -127,8 +159,8 @@ class _ScreenTimeUploadState extends State<ScreenTimeUpload> {
             ),
             Center(
               child: _image == null
-                  ? Text('No image selected.')
-                  : Image.file(_image),
+                  ? Text('No video selected.')
+                  : Text("screen recording selected!"),
             ),
             RegularGreenButton("Upload Recording", getImage)
           ],
