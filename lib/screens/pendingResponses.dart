@@ -13,21 +13,20 @@ class _FamilyMemberListState extends State<PendingResponses> {
   @override
   Widget build(BuildContext context) {
     double height = MediaQuery.of(context).size.height;
-    final familyMemberList = Provider.of<List<FamilyMember>>(context);
+    final familyMemberList = Provider.of<List<FamilyMember>>(context) ?? [];
     int pendingResponses = 0;
     for (var family in familyMemberList) {
       if (family.isSurveyFilled == false) {
         pendingResponses = pendingResponses + 1;
       }
     }
-    return Padding(
-      padding: EdgeInsets.only(left: 10),
-      child: Text(
-        "($pendingResponses Pending Responses)",
-        style: TextStyle(
-          fontSize: height / 60,
-          color: Theme.of(context).primaryColor,
-        ),
+    return Text(
+      "$pendingResponses Pending Responses",
+      overflow: TextOverflow.fade,
+      maxLines: 1,
+      style: TextStyle(
+        fontSize: height / 50,
+        color: Theme.of(context).primaryColor,
       ),
     );
   }
