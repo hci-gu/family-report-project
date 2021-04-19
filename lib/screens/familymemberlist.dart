@@ -4,7 +4,10 @@ import 'package:provider/provider.dart';
 import './familymember.dart';
 
 class FamilyMemberList extends StatefulWidget {
-  FamilyMemberList({Key key}) : super(key: key);
+  final String familyId;
+  final String currentLoggedInUserUid;
+  FamilyMemberList({Key key, this.familyId, this.currentLoggedInUserUid})
+      : super(key: key);
 
   @override
   _FamilyMemberListState createState() => _FamilyMemberListState();
@@ -13,15 +16,21 @@ class FamilyMemberList extends StatefulWidget {
 class _FamilyMemberListState extends State<FamilyMemberList> {
   @override
   Widget build(BuildContext context) {
-    final familyMemberList = Provider.of<List<FamilyMember>>(context);
-    print(familyMemberList[0].name);
+    final familyMemberList = Provider.of<List<FamilyMember>>(context) ?? [];
     return Container(
-      child: Column(
-        children: [
-          for (var family in familyMemberList)
-            FamilyMemberWidget(familyMember: family)
-        ],
-      ),
+      child: familyMemberList.isEmpty
+          ? CircularProgressIndicator()
+          : Column(
+              children: [
+                for (var family in familyMemberList)
+                  if (family.isSurveyFilled == false)
+                    FamilyMemberWidget(
+                      familyMember: family,
+                      familyId: widget.familyId,
+                      currentLoggedInUserUid: widget.currentLoggedInUserUid,
+                    )
+              ],
+            ),
     );
   }
 }

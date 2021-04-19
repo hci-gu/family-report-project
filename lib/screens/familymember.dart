@@ -4,8 +4,11 @@ import 'survey/survey.dart';
 
 class FamilyMemberWidget extends StatelessWidget {
   final FamilyMember familyMember;
+  final String currentLoggedInUserUid;
+  final String familyId;
 
-  FamilyMemberWidget({this.familyMember});
+  FamilyMemberWidget(
+      {this.familyMember, this.familyId, this.currentLoggedInUserUid});
 
   @override
   Widget build(BuildContext context) {
@@ -107,7 +110,9 @@ class FamilyMemberWidget extends StatelessWidget {
         onPressed: () {
           Navigator.push(
             context,
-            MaterialPageRoute(builder: (context) => SurveyForm(familyMember)),
+            MaterialPageRoute(
+                builder: (context) =>
+                    SurveyForm(familyMember, familyId, currentLoggedInUserUid)),
           );
         },
       ),

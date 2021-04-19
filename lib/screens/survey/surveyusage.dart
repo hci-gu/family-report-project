@@ -5,7 +5,11 @@ import '../../models/model.dart';
 
 class SurveyUsage extends StatefulWidget {
   final FamilyMember familyMember;
-  SurveyUsage({Key key, this.familyMember}) : super(key: key);
+  final String currentLoggedInUserUid;
+  final String familyId;
+  SurveyUsage(
+      {Key key, this.familyMember, this.familyId, this.currentLoggedInUserUid})
+      : super(key: key);
 
   @override
   _SurveyUsageState createState() => _SurveyUsageState();
@@ -16,6 +20,8 @@ class _SurveyUsageState extends State<SurveyUsage> {
 
   @override
   Widget build(BuildContext context) {
+    print("${widget.currentLoggedInUserUid} in homescreen");
+
     double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;
     return Scaffold(
@@ -52,9 +58,11 @@ class _SurveyUsageState extends State<SurveyUsage> {
                 activeColor: Theme.of(context).primaryColor,
                 label: _currentSliderValue.round().toString(),
                 onChanged: (double value) {
-                  setState(() {
-                    _currentSliderValue = value;
-                  });
+                  setState(
+                    () {
+                      _currentSliderValue = value;
+                    },
+                  );
                 },
               ),
             ),
@@ -64,11 +72,26 @@ class _SurveyUsageState extends State<SurveyUsage> {
               child: RegularGreenButton(
                 "Continue",
                 () {
+                  var tempSurvey = {
+                    widget.familyMember.id: {
+                      "Smartphone Usage": "",
+                      "Smartphone Pickups": "",
+                      "Smartphone work/leisure usage": ""
+                    }
+                  };
+                  tempSurvey[widget.familyMember.id]["Smartphone Usage"] =
+                      _currentSliderValue.toString();
+
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                        builder: (context) =>
-                            SurveyPickup(familyMember: widget.familyMember)),
+                      builder: (context) => SurveyPickup(
+                        familyMember: widget.familyMember,
+                        familyId: widget.familyId,
+                        currentLoggedInUserUid: widget.currentLoggedInUserUid,
+                        tempSurvey: tempSurvey,
+                      ),
+                    ),
                   );
                 },
               ),

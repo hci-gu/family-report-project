@@ -2,13 +2,23 @@ import './../homescreen.dart';
 import 'package:flutter/material.dart';
 import './../regulargreenbutton.dart';
 import '../../models/model.dart';
+import '../../services/database.dart';
 
 enum SmartphoneUsageType { work, leisure }
 
 class SurveyWL extends StatefulWidget {
   final FamilyMember familyMember;
+  final String currentLoggedInUserUid;
+  final String familyId;
+  final Map<String, Map<String, String>> tempSurvey;
 
-  SurveyWL({Key key, this.familyMember}) : super(key: key);
+  SurveyWL(
+      {Key key,
+      this.familyMember,
+      this.currentLoggedInUserUid,
+      this.familyId,
+      this.tempSurvey})
+      : super(key: key);
 
   @override
   _SurveyWLState createState() => _SurveyWLState();
@@ -51,9 +61,11 @@ class _SurveyWLState extends State<SurveyWL> {
                   value: SmartphoneUsageType.work,
                   groupValue: _character,
                   onChanged: (SmartphoneUsageType value) {
-                    setState(() {
-                      _character = value;
-                    });
+                    setState(
+                      () {
+                        _character = value;
+                      },
+                    );
                   },
                 ),
               ],
@@ -63,10 +75,25 @@ class _SurveyWLState extends State<SurveyWL> {
               margin: EdgeInsets.fromLTRB(width / 30, 10, width / 30, 30),
               child: RegularGreenButton(
                 "Finish Survey",
-                () {
+                () async {
+                  widget.tempSurvey[widget.familyMember.id]
+                          ["Smartphone work/leisure usage"] =
+                      (_character == SmartphoneUsageType.leisure)
+                          ? "leisure"
+                          : "work";
+
+                  DatabaseService(widget.familyId,
+                          uid: widget.currentLoggedInUserUid)
+                      .updateFamilyMemberSurveyResponses(widget.tempSurvey);
+
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => HomeScreen()),
+                    MaterialPageRoute(
+                      builder: (context) => HomeScreen(
+                        familyId: widget.familyId,
+                        loggedInUserUid: widget.currentLoggedInUserUid,
+                      ),
+                    ),
                   );
                 },
               ),

@@ -23,20 +23,48 @@ class DatabaseService {
       'relation': '',
       'age': '',
       'gender': '',
-      'surveyQuestionResponses': new Map(),
-      'qualitativeStudyResponses': new Map(),
+      'surveyQuestionResponses': new Map<String, Map<String, String>>(),
+      'qualitativeStudyResponses': new Map<String, Map<String, String>>(),
       'totalScreenTime': 0.0,
       'hourlyScreenTimeBreakdown': [],
     });
   }
 
+  Future updateFamilyMemberSurveyResponses(
+      Map<String, Map<String, String>> surveyResponses) async {
+    return await ref.doc(uid).set(
+      {
+        'surveyQuestionResponses': surveyResponses,
+        'isSurveyFilled': true,
+      },
+      SetOptions(merge: true),
+    );
+  }
+
+  //creates a stream of updates from firestore for all the family members as a list
   Stream<List<FamilyMember>> get familyMemberList {
     return ref.snapshots().map(_familyMemberListFromSnapshot);
   }
 
-  // Stream<FamilyMember> familyMember(String id) {
-  //   return ref.doc(id);
-  // }
+  //creates a stream of updates from firestore for the particular family member user based on uid
+  Stream<FamilyMember> get familyMemberData {
+    return ref.doc(uid).snapshots().map(_familyMemberFromSnapshot);
+  }
+
+  FamilyMember _familyMemberFromSnapshot(DocumentSnapshot snapshot) {
+    return FamilyMember(
+      id: snapshot.data()['id'],
+      name: snapshot.data()['name'],
+      isSurveyFilled: snapshot.data()['isSurveyFilled'],
+      totalScreenTime: snapshot.data()['totalScreenTime'],
+      gender: snapshot.data()['gender'],
+      age: snapshot.data()['age'],
+      relation: snapshot.data()['relation'],
+      surveyQuestionResponses: snapshot.data()['surveyQuestionResponses'],
+      qualitativeStudyResponses: snapshot.data()['qualitativeStudyResponses'],
+      hourlyScreenTimeBreakdown: snapshot.data()['hourlyScreenTimeBreakdown'],
+    );
+  }
 
   List<FamilyMember> _familyMemberListFromSnapshot(QuerySnapshot snapshot) {
     return snapshot.docs.map((doc) {

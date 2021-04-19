@@ -30,8 +30,8 @@ class FamilyMember {
       String age,
       String gender,
       bool isSurveyFilled,
-      Map<String, String> surveyQuestionResponses,
-      Map<String, String> qualitativeStudyResponses,
+      Map<String, Map<String, String>> surveyQuestionResponses,
+      Map<String, Map<String, String>> qualitativeStudyResponses,
       double totalScreenTime,
       var hourlyScreenTimeBreakdown) {
     this.name = name;

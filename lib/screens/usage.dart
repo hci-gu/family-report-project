@@ -31,10 +31,6 @@ class _UsageDataState extends State<UsageData> {
       Duration calcDuration = new Duration(hours: 0, minutes: 0, seconds: 0);
       Duration weekDuration = new Duration(hours: 0, minutes: 0, seconds: 0);
       Duration weekDurationAverage;
-      // List<AppUsageInfo> inter;
-      // Duration peakUsage = new Duration(hours: 0, minutes: 0, seconds: 0);
-      // Duration temp = new Duration(hours: 0, minutes: 0, seconds: 0);
-      // DateTime peakUsageTime = new DateTime.now();
 
       for (int j = 0; j < 7; j++) {
         startDate = DateTime.now().subtract(Duration(days: j + 1));
@@ -53,26 +49,14 @@ class _UsageDataState extends State<UsageData> {
       for (int i = 0; i < infos.length; i++) {
         calcDuration = calcDuration + infos[i].usage;
       }
-      // weekDurationAverage =
-      //     weekDuration.reduce((a, b) => a + b) ~/ weekDuration.length;
-      // for (int j = 0; j < 24; j++) {
-      //   inter = await AppUsage.getAppUsage(
-      //       startDate, startDate.add(Duration(hours: (j + 1))));
-      //   for (int k = 0; k < inter.length; k++) {
-      //     peakUsage = peakUsage + infos[k].usage;
-      //   }
-      //   if (temp < peakUsage) {
-      //     temp = peakUsage;
-      //     peakUsageTime = startDate.add(Duration(hours: (j + 1)));
-      //   }
-      //   peakUsage = Duration(hours: 0, minutes: 0, seconds: 0);
-      // }
-      this.setState(() {
-        events = infos.reversed.toList();
-        totalDuration = calcDuration;
-        weeklyAvgDuration = weekDurationAverage;
-        // peakUsageDateTime = peakUsageTime;
-      });
+
+      this.setState(
+        () {
+          events = infos.reversed.toList();
+          totalDuration = calcDuration;
+          weeklyAvgDuration = weekDurationAverage;
+        },
+      );
     } on AppUsageException catch (exception) {
       print(exception);
     }

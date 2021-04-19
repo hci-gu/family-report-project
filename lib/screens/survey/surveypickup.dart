@@ -5,7 +5,16 @@ import '../../models/model.dart';
 
 class SurveyPickup extends StatefulWidget {
   final FamilyMember familyMember;
-  SurveyPickup({Key key, this.familyMember}) : super(key: key);
+  final String currentLoggedInUserUid;
+  final String familyId;
+  final Map<String, Map<String, String>> tempSurvey;
+  SurveyPickup(
+      {Key key,
+      this.familyMember,
+      this.currentLoggedInUserUid,
+      this.familyId,
+      this.tempSurvey})
+      : super(key: key);
 
   @override
   _SurveyPickupState createState() => _SurveyPickupState();
@@ -15,6 +24,8 @@ class _SurveyPickupState extends State<SurveyPickup> {
   double _currentSliderValue = 0;
   @override
   Widget build(BuildContext context) {
+    print("${widget.currentLoggedInUserUid} in homescreen");
+
     double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;
     return Scaffold(
@@ -51,9 +62,11 @@ class _SurveyPickupState extends State<SurveyPickup> {
                 activeColor: Theme.of(context).primaryColor,
                 label: _currentSliderValue.round().toString(),
                 onChanged: (double value) {
-                  setState(() {
-                    _currentSliderValue = value;
-                  });
+                  setState(
+                    () {
+                      _currentSliderValue = value;
+                    },
+                  );
                 },
               ),
             ),
@@ -63,11 +76,19 @@ class _SurveyPickupState extends State<SurveyPickup> {
               child: RegularGreenButton(
                 "Continue",
                 () {
+                  widget.tempSurvey[widget.familyMember.id]
+                      ["Smartphone Pickups"] = _currentSliderValue.toString();
+
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                        builder: (context) =>
-                            SurveyWL(familyMember: widget.familyMember)),
+                        builder: (context) => SurveyWL(
+                              familyMember: widget.familyMember,
+                              tempSurvey: widget.tempSurvey,
+                              familyId: widget.familyId,
+                              currentLoggedInUserUid:
+                                  widget.currentLoggedInUserUid,
+                            )),
                   );
                 },
               ),
