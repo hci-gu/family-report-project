@@ -25,12 +25,19 @@ class AuthService {
     try {
       UserCredential result = await _auth.createUserWithEmailAndPassword(
           email: email, password: password);
-      // obtain shared preferences
+
+      // set familyID and FamilyMember UID to shared preferences for quick reference without using provider
       Future<bool> test =
           SharedPreferencesHelper.setFamilyCollectionName(familyId);
-      test.then((value) => (value) ? print("done!!!!") : print("fuck"));
+      test.then((value) => (value)
+          ? print("familyID saved in shared Preferences")
+          : print("error in saving familyID to shared Preferences"));
+      Future<bool> uidTest =
+          SharedPreferencesHelper.setFamilyMemberUid(result.user.uid);
+      uidTest.then((value) => (value)
+          ? print("FamilyMember UID saved in shared Preferences")
+          : print("error in saving FamilyMember UID to shared Preferences"));
 
-      print(familyId);
       await DatabaseService(familyId, uid: result.user.uid)
           .createFamilyMemberDataWithName(name);
       return _familyMemberFromFirebaseUser(result.user);
