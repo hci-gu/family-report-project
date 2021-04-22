@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import './../models/model.dart';
+import '../models/model.dart';
 import 'survey/survey.dart';
 
 class FamilyMemberWidget extends StatelessWidget {
@@ -53,7 +53,7 @@ class FamilyMemberWidget extends StatelessWidget {
                   Padding(
                     padding: EdgeInsets.fromLTRB(0, 10, 0, 15),
                     child: Text(
-                      familyMember.name,
+                      familyMember.isSurveyFilled.toString(),
                       overflow: TextOverflow.ellipsis,
                       maxLines: 1,
                       softWrap: false,
@@ -89,13 +89,25 @@ class FamilyMemberWidget extends StatelessWidget {
                           )
                         ],
                       )
-                    : Text(
-                        "Done",
-                        style: TextStyle(
-                          color: Theme.of(context).primaryColor,
-                          fontSize: height / 50,
-                        ),
-                        textAlign: TextAlign.right,
+                    : Row(
+                        children: [
+                          Text(
+                            "Done",
+                            style: TextStyle(
+                              color: Theme.of(context).primaryColor,
+                              fontSize: height / 50,
+                            ),
+                            textAlign: TextAlign.right,
+                          ),
+                          Container(
+                            child: Icon(
+                              Icons.check,
+                              color: Theme.of(context).primaryColor,
+                              size: height / 40,
+                            ),
+                            margin: EdgeInsets.fromLTRB(10, 0, 0, 0),
+                          )
+                        ],
                       ),
               )
             ],
