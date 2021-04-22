@@ -24,8 +24,6 @@ class _SurveyPickupState extends State<SurveyPickup> {
   double _currentSliderValue = 0;
   @override
   Widget build(BuildContext context) {
-    print("${widget.currentLoggedInUserUid} in homescreen");
-
     double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;
     return Scaffold(
