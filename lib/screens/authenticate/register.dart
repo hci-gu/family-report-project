@@ -20,7 +20,7 @@ class _RegisterState extends State<Register> {
   String familyId = "";
   String age = "";
   String gender = "";
-  String relation = null;
+  String relation = 'Mother';
   String error = "";
 
   @override
@@ -143,22 +143,22 @@ class _RegisterState extends State<Register> {
                                   val.isEmpty ? 'Enter your age' : null,
                               onChanged: (val) {
                                 setState(() {
-                                  name = val;
+                                  age = val;
                                 });
                               },
                             ),
                             SizedBox(
                               height: 20,
                             ),
-                            Container(
-                              width: double.infinity,
+                            ButtonTheme(
+                              alignedDropdown: true,
                               child: DropdownButton<String>(
+                                isExpanded: true,
+                                hint: Text("Enter your relation"),
                                 value: relation,
-                                focusColor: Theme.of(context).primaryColor,
-                                hint: Text("choose a relation"),
-                                onChanged: (String val) {
+                                onChanged: (String newValue) {
                                   setState(() {
-                                    relation = val;
+                                    relation = newValue;
                                   });
                                 },
                                 items: <String>[
@@ -166,11 +166,11 @@ class _RegisterState extends State<Register> {
                                   'Mother',
                                   'Son',
                                   'Daughter',
-                                  'Other'
-                                ].map((String value) {
-                                  return new DropdownMenuItem<String>(
-                                    value: relation,
-                                    child: new Text(value),
+                                  'Other',
+                                ].map<DropdownMenuItem<String>>((String value) {
+                                  return DropdownMenuItem<String>(
+                                    value: value,
+                                    child: Text(value),
                                   );
                                 }).toList(),
                               ),
@@ -187,7 +187,13 @@ class _RegisterState extends State<Register> {
                                   });
                                   dynamic result =
                                       await _auth.registerWithEmailAndPassword(
-                                          name, email, password, familyId);
+                                          name,
+                                          email,
+                                          password,
+                                          familyId,
+                                          age,
+                                          relation,
+                                          gender);
                                   Navigator.pop(context);
                                   if (result == null) {
                                     setState(() {
