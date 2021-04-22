@@ -1,34 +1,49 @@
 {
   "project_info": {
-    "project_number": "165202292774",
-    "project_id": "family-report",
-    "storage_bucket": "family-report.appspot.com"
+    "project_number": "1001131204900",
+    "project_id": "brew-test-app",
+    "storage_bucket": "brew-test-app.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:165202292774:android:91649f2fde1f24e9b376e7",
+        "mobilesdk_app_id": "1:1001131204900:android:d7047c6daba478e55493b1",
         "android_client_info": {
-          "package_name": "com.gothuni.familyreport"
+          "package_name": "com.example.family_report_project"
         }
       },
       "oauth_client": [
         {
-          "client_id": "165202292774-lp23u7mite3am1th421ca7mn9052h9e2.apps.googleusercontent.com",
+          "client_id": "1001131204900-qbfau1nkjo3ufkofk6afpv5oc6rv7u7i.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.family_report_project",
+            "certificate_hash": "02f620e925f207b465d3469e1b23e6480605d186"
+          }
+        },
+        {
+          "client_id": "1001131204900-dm2vks4bpen10h7hc6ar9vtboqo0bsql.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyBO-mn_wroUMpmNgXdZXjgL4bbTh2fX9zE"
+          "current_key": "AIzaSyAb9Sim5fJXxIA1OKnUXytgZxFFYghLk1E"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "165202292774-lp23u7mite3am1th421ca7mn9052h9e2.apps.googleusercontent.com",
+              "client_id": "1001131204900-dm2vks4bpen10h7hc6ar9vtboqo0bsql.apps.googleusercontent.com",
               "client_type": 3
+            },
+            {
+              "client_id": "1001131204900-2k3s63ohlvb9v8bilpn7mf8fr5k9sb4l.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.brewCrewglados"
+              }
             }
           ]
         }

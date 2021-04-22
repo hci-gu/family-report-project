@@ -37,7 +37,6 @@ dependencies:
   firebase_storage: ^8.0.3
   cloud_firestore: ^1.0.1
   firebase_dynamic_links: ^0.8.0
-  permission_handler: ^6.1.1
   shared_preferences: ^2.0.5
   uuid: ^3.0.4
   image_picker: ^0.7.4
