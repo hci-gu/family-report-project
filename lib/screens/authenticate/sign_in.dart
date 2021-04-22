@@ -52,6 +52,7 @@ class _SignInState extends State<SignIn> {
                             height: 20,
                           ),
                           TextFormField(
+                            textCapitalization: TextCapitalization.none,
                             validator: (val) =>
                                 val.isEmpty ? 'enter an email' : null,
                             onChanged: (val) {
@@ -64,6 +65,7 @@ class _SignInState extends State<SignIn> {
                             height: 20,
                           ),
                           TextFormField(
+                            textCapitalization: TextCapitalization.none,
                             validator: (val) => val.length < 6
                                 ? 'enter a password more than 6 characters'
                                 : null,

@@ -68,6 +68,7 @@ class _RegisterState extends State<Register> {
                             height: 20,
                           ),
                           TextFormField(
+                            textCapitalization: TextCapitalization.none,
                             decoration: InputDecoration(
                               hintText: 'Email',
                             ),
@@ -83,6 +84,7 @@ class _RegisterState extends State<Register> {
                             height: 20,
                           ),
                           TextFormField(
+                            textCapitalization: TextCapitalization.none,
                             decoration: InputDecoration(
                               hintText: 'Password',
                             ),
@@ -100,6 +102,7 @@ class _RegisterState extends State<Register> {
                             height: 20,
                           ),
                           TextFormField(
+                            textCapitalization: TextCapitalization.none,
                             decoration: InputDecoration(
                               hintText: 'Family ID',
                             ),
