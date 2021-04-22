@@ -21,8 +21,16 @@ class _ExperienceFamilyState extends State<ExperienceFamily> {
     double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;
     return Scaffold(
+      resizeToAvoidBottomInset: true,
       appBar: AppBar(
-        title: Text("Experience Jar - family"),
+        iconTheme: IconThemeData(
+          color: Theme.of(context).primaryColor,
+        ),
+        elevation: 0,
+        title: Text("Experience Jar - Family",
+            style: TextStyle(color: Theme.of(context).primaryColor)),
+        backgroundColor: Colors.white,
+        foregroundColor: Theme.of(context).primaryColor,
       ),
       body: SingleChildScrollView(
         reverse: true,
@@ -62,7 +70,6 @@ class _ExperienceFamilyState extends State<ExperienceFamily> {
                 SizedBox(
                   height: 20,
                 ),
-                Spacer(),
                 RegularGreenButton("Finish Daily Log", () {
                   Navigator.push(
                     context,
