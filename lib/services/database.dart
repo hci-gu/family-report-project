@@ -25,8 +25,8 @@ class DatabaseService {
       'gender': '',
       'surveyQuestionResponses': new Map<String, Map<String, String>>(),
       'qualitativeStudyResponses': new Map<String, Map<String, String>>(),
-      'totalScreenTime': 0.0,
-      'hourlyScreenTimeBreakdown': [],
+      'totalScreenTime': new Map<String, double>(),
+      'hourlyScreenTimeBreakdown': new Map<String, List<double>>(),
     });
   }
 
@@ -36,6 +36,17 @@ class DatabaseService {
       {
         'surveyQuestionResponses': surveyResponses,
         'isSurveyFilled': true,
+      },
+      SetOptions(merge: true),
+    );
+  }
+
+  Future updateFamilyMemberScreenTimeData(Map<String, double> totalScreenTime,
+      Map<String, List<double>> screenTimeBreakdown) async {
+    return await ref.doc(uid).set(
+      {
+        'totalScreenTime': totalScreenTime,
+        'hourlyScreenTimeBreakdown': screenTimeBreakdown,
       },
       SetOptions(merge: true),
     );
