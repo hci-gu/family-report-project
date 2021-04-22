@@ -5,7 +5,6 @@ import '../models/model.dart';
 import '../services/database.dart';
 import './screentimeupload.dart';
 import './settings.dart';
-import './pendingResponses.dart';
 import './usage.dart';
 import 'dart:io';
 
@@ -21,7 +20,6 @@ class HomeScreen extends StatefulWidget {
 class _HomescreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
-    print("${widget.loggedInUserUid} in homescreen");
     double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;
     return StreamProvider<List<FamilyMember>>.value(
@@ -78,24 +76,6 @@ class _HomescreenState extends State<HomeScreen> {
                       margin: EdgeInsets.only(top: 10),
                       child: TextButton.icon(
                         style: ButtonStyle(alignment: Alignment.centerLeft),
-                        onPressed: () {},
-                        icon: Icon(
-                          Icons.share,
-                          color: Theme.of(context).primaryColor,
-                        ),
-                        label: Text(
-                          "Invite to Family",
-                          style: TextStyle(
-                              color: Theme.of(context).primaryColor,
-                              fontSize: height / 37),
-                        ),
-                      ),
-                    ),
-                    Container(
-                      width: double.infinity,
-                      margin: EdgeInsets.only(top: 10),
-                      child: TextButton.icon(
-                        style: ButtonStyle(alignment: Alignment.centerLeft),
                         onPressed: () {
                           Navigator.of(context).push(
                             MaterialPageRoute(
@@ -142,19 +122,6 @@ class _HomescreenState extends State<HomeScreen> {
                             ),
                           )
                         : Container(),
-                    Container(
-                      width: double.infinity,
-                      margin: EdgeInsets.only(top: 20.0),
-                      child: Text(
-                        "Members",
-                        style: TextStyle(
-                            fontSize: height / 25, fontWeight: FontWeight.bold),
-                      ),
-                    ),
-                    Container(
-                        width: double.infinity,
-                        margin: EdgeInsets.only(top: 10.0),
-                        child: PendingResponses()),
                   ],
                 ),
               ),
