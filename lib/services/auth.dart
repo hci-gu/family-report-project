@@ -22,8 +22,18 @@ class AuthService {
 
   //register with email and password\
   Future registerWithEmailAndPassword(
-      String name, String email, String password, String familyId) async {
+    String name,
+    String email,
+    String password,
+    String familyId,
+    String age,
+    String relation,
+    String gender,
+  ) async {
     try {
+      print(name);
+      print(age);
+      print(relation);
       UserCredential result = await _auth.createUserWithEmailAndPassword(
           email: email, password: password);
 
@@ -31,18 +41,13 @@ class AuthService {
       bool test =
           await SharedPreferencesHelper.setFamilyCollectionName(familyId);
       print("$test familyID saved in shared Preferences");
-      // test.then((value) => (value)
-      //     ? print("familyID saved in shared Preferences")
-      //     : print("error in saving familyID to shared Preferences"));
+
       bool uidTest =
           await SharedPreferencesHelper.setFamilyMemberUid(result.user.uid);
       print("$uidTest familyID saved in shared Preferences");
-      // uidTest.then((value) => (value)
-      //     ? print("FamilyMember UID saved in shared Preferences")
-      //     : print("error in saving FamilyMember UID to shared Preferences"));
 
       await DatabaseService(familyId, uid: result.user.uid)
-          .createFamilyMemberDataWithName(name);
+          .createFamilyMemberDataWithName(name, age, relation, gender);
 
       //collect usage data and send it to firebase
       if (Platform.isAndroid == true) {

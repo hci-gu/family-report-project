@@ -15,14 +15,15 @@ class DatabaseService {
     ref = _db.collection(path);
   }
 
-  Future createFamilyMemberDataWithName(String name) async {
+  Future createFamilyMemberDataWithName(
+      String name, String age, String relation, String gender) async {
     return await ref.doc(uid).set({
       'name': name,
       'id': uid,
       'isSurveyFilled': false,
-      'relation': '',
-      'age': '',
-      'gender': '',
+      'relation': relation,
+      'age': age,
+      'gender': gender,
       'surveyQuestionResponses': new Map<String, Map<String, String>>(),
       'qualitativeStudyResponses': new Map<String, Map<String, String>>(),
       'totalScreenTime': new Map<String, double>(),
