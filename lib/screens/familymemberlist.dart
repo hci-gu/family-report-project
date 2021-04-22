@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import './../models/model.dart';
 import 'package:provider/provider.dart';
-import './familymember.dart';
+import 'familymemberwidget.dart';
 import './regulargreenbutton.dart';
 import './experiencejar/experienceself.dart';
 import './pendingResponses.dart';
@@ -24,15 +24,15 @@ class _FamilyMemberListState extends State<FamilyMemberList> {
     final familyMemberList = Provider.of<List<FamilyMember>>(context) ?? [];
     bool isAllSurveysFilled = true;
     for (var familyMember in familyMemberList) {
-      print(
-          "${familyMember.name} has filled form? - ${familyMember.isSurveyFilled.toString()} list builder");
       if (familyMember.isSurveyFilled == false) {
         isAllSurveysFilled = false;
       }
     }
     return Container(
       child: familyMemberList.isEmpty
-          ? CircularProgressIndicator()
+          ? Center(
+              child: CircularProgressIndicator(),
+            )
           : (isAllSurveysFilled == true)
               ? Column(
                   //experience jar section

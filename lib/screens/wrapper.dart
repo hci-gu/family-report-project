@@ -12,7 +12,6 @@ class Wrapper extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final familyMemberUser = Provider.of<FamilyMember>(context);
-    print(familyMemberUser);
 
     if (familyMemberUser == null) {
       return Authenticate();

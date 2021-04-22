@@ -1,8 +1,9 @@
 import 'package:family_report_project/models/model.dart';
 import 'package:family_report_project/services/database.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import '../helpers/sharedpreferenceshelper.dart';
+import './../screens/usage.dart';
+import 'dart:io';
 
 class AuthService {
   final FirebaseAuth _auth = FirebaseAuth.instance;
@@ -27,19 +28,26 @@ class AuthService {
           email: email, password: password);
 
       // set familyID and FamilyMember UID to shared preferences for quick reference without using provider
-      Future<bool> test =
-          SharedPreferencesHelper.setFamilyCollectionName(familyId);
-      test.then((value) => (value)
-          ? print("familyID saved in shared Preferences")
-          : print("error in saving familyID to shared Preferences"));
-      Future<bool> uidTest =
-          SharedPreferencesHelper.setFamilyMemberUid(result.user.uid);
-      uidTest.then((value) => (value)
-          ? print("FamilyMember UID saved in shared Preferences")
-          : print("error in saving FamilyMember UID to shared Preferences"));
+      bool test =
+          await SharedPreferencesHelper.setFamilyCollectionName(familyId);
+      print("$test familyID saved in shared Preferences");
+      // test.then((value) => (value)
+      //     ? print("familyID saved in shared Preferences")
+      //     : print("error in saving familyID to shared Preferences"));
+      bool uidTest =
+          await SharedPreferencesHelper.setFamilyMemberUid(result.user.uid);
+      print("$uidTest familyID saved in shared Preferences");
+      // uidTest.then((value) => (value)
+      //     ? print("FamilyMember UID saved in shared Preferences")
+      //     : print("error in saving FamilyMember UID to shared Preferences"));
 
       await DatabaseService(familyId, uid: result.user.uid)
           .createFamilyMemberDataWithName(name);
+
+      //collect usage data and send it to firebase
+      if (Platform.isAndroid == true) {
+        UsageData();
+      }
       return _familyMemberFromFirebaseUser(result.user);
     } catch (e) {
       print(e.toString());

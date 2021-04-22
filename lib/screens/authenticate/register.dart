@@ -18,136 +18,199 @@ class _RegisterState extends State<Register> {
   String email = "";
   String password = "";
   String familyId = "";
+  String age = "";
+  String gender = "";
+  String relation = null;
   String error = "";
 
   @override
   Widget build(BuildContext context) {
+    final bottom = MediaQuery.of(context).viewInsets.bottom;
     double width = MediaQuery.of(context).size.width;
-    double height = MediaQuery.of(context).size.height;
+    final node = FocusScope.of(context);
     return loading
         ? Loading()
-        : Container(
-            child: Scaffold(
-              appBar: AppBar(
-                iconTheme: IconThemeData(
-                  color: Theme.of(context).primaryColor,
-                ),
-                elevation: 0,
-                backgroundColor: Colors.white,
-                foregroundColor: Theme.of(context).primaryColor,
-                title: Text(
-                  "Sign up with Family ID",
-                  style: TextStyle(color: Theme.of(context).primaryColor),
-                ),
+        : Scaffold(
+            resizeToAvoidBottomInset: false,
+            appBar: AppBar(
+              iconTheme: IconThemeData(
+                color: Theme.of(context).primaryColor,
               ),
-              body: Container(
-                margin: EdgeInsets.only(
-                    left: width / 30, right: width / 30, bottom: 30),
-                child: Column(
-                  children: [
-                    Form(
-                      key: _formKey,
-                      child: Column(
-                        children: [
-                          SizedBox(
-                            height: 20,
-                          ),
-                          TextFormField(
-                            decoration: InputDecoration(
-                              hintText: 'Full Name',
+              elevation: 0,
+              backgroundColor: Colors.white,
+              foregroundColor: Theme.of(context).primaryColor,
+              title: Text(
+                "Sign up with Family ID",
+                style: TextStyle(color: Theme.of(context).primaryColor),
+              ),
+            ),
+            body: SingleChildScrollView(
+              reverse: true,
+              child: Padding(
+                padding: EdgeInsets.only(bottom: bottom),
+                child: Container(
+                  margin: EdgeInsets.only(
+                      left: width / 30, right: width / 30, bottom: 30),
+                  child: Column(
+                    children: [
+                      Form(
+                        key: _formKey,
+                        child: Column(
+                          children: [
+                            SizedBox(
+                              height: 20,
                             ),
-                            validator: (val) =>
-                                val.isEmpty ? 'Enter a name' : null,
-                            onChanged: (val) {
-                              setState(() {
-                                name = val;
-                              });
-                            },
-                          ),
-                          SizedBox(
-                            height: 20,
-                          ),
-                          TextFormField(
-                            textCapitalization: TextCapitalization.none,
-                            decoration: InputDecoration(
-                              hintText: 'Email',
-                            ),
-                            validator: (val) =>
-                                val.isEmpty ? 'enter an email' : null,
-                            onChanged: (val) {
-                              setState(() {
-                                email = val;
-                              });
-                            },
-                          ),
-                          SizedBox(
-                            height: 20,
-                          ),
-                          TextFormField(
-                            textCapitalization: TextCapitalization.none,
-                            decoration: InputDecoration(
-                              hintText: 'Password',
-                            ),
-                            validator: (val) => val.length < 6
-                                ? 'enter a password more than 6 characters'
-                                : null,
-                            obscureText: true,
-                            onChanged: (val) {
-                              setState(() {
-                                password = val;
-                              });
-                            },
-                          ),
-                          SizedBox(
-                            height: 20,
-                          ),
-                          TextFormField(
-                            textCapitalization: TextCapitalization.none,
-                            decoration: InputDecoration(
-                              hintText: 'Family ID',
-                            ),
-                            validator: (val) =>
-                                val.isEmpty ? 'enter a family ID' : null,
-                            onChanged: (val) {
-                              setState(() {
-                                familyId = val;
-                              });
-                            },
-                          ),
-                          SizedBox(
-                            height: 20,
-                          ),
-                          RegularGreenButton(
-                            "Sign up",
-                            () async {
-                              if (_formKey.currentState.validate()) {
+                            TextFormField(
+                              textInputAction: TextInputAction.next,
+                              onEditingComplete: () => node.nextFocus(),
+                              decoration: InputDecoration(
+                                hintText: 'Full Name',
+                              ),
+                              validator: (val) =>
+                                  val.isEmpty ? 'Enter a name' : null,
+                              onChanged: (val) {
                                 setState(() {
-                                  loading = true;
+                                  name = val;
                                 });
-                                dynamic result =
-                                    await _auth.registerWithEmailAndPassword(
-                                        name, email, password, familyId);
-                                Navigator.pop(context);
-                                if (result == null) {
+                              },
+                            ),
+                            SizedBox(
+                              height: 20,
+                            ),
+                            TextFormField(
+                              textInputAction: TextInputAction.next,
+                              onEditingComplete: () => node.nextFocus(),
+                              textCapitalization: TextCapitalization.none,
+                              decoration: InputDecoration(
+                                hintText: 'Email',
+                              ),
+                              validator: (val) =>
+                                  val.isEmpty ? 'enter an email' : null,
+                              onChanged: (val) {
+                                setState(() {
+                                  email = val;
+                                });
+                              },
+                            ),
+                            SizedBox(
+                              height: 20,
+                            ),
+                            TextFormField(
+                              textInputAction: TextInputAction.next,
+                              onEditingComplete: () => node.nextFocus(),
+                              textCapitalization: TextCapitalization.none,
+                              decoration: InputDecoration(
+                                hintText: 'Password',
+                              ),
+                              validator: (val) => val.length < 6
+                                  ? 'enter a password more than 6 characters'
+                                  : null,
+                              obscureText: true,
+                              onChanged: (val) {
+                                setState(() {
+                                  password = val;
+                                });
+                              },
+                            ),
+                            SizedBox(
+                              height: 20,
+                            ),
+                            TextFormField(
+                              textInputAction: TextInputAction.next,
+                              onEditingComplete: () => node.nextFocus(),
+                              textCapitalization: TextCapitalization.none,
+                              decoration: InputDecoration(
+                                hintText: 'Family ID',
+                              ),
+                              validator: (val) =>
+                                  val.isEmpty ? 'enter a family ID' : null,
+                              onChanged: (val) {
+                                setState(() {
+                                  familyId = val;
+                                });
+                              },
+                            ),
+                            SizedBox(
+                              height: 20,
+                            ),
+                            TextFormField(
+                              textInputAction: TextInputAction.done,
+                              onEditingComplete: () => node.nextFocus(),
+                              decoration: InputDecoration(
+                                hintText: 'Age',
+                              ),
+                              validator: (val) =>
+                                  val.isEmpty ? 'Enter your age' : null,
+                              onChanged: (val) {
+                                setState(() {
+                                  name = val;
+                                });
+                              },
+                            ),
+                            SizedBox(
+                              height: 20,
+                            ),
+                            Container(
+                              width: double.infinity,
+                              child: DropdownButton<String>(
+                                value: relation,
+                                focusColor: Theme.of(context).primaryColor,
+                                hint: Text("choose a relation"),
+                                onChanged: (String val) {
                                   setState(() {
-                                    error = "please give a valid email";
-                                    loading = false;
+                                    relation = val;
                                   });
+                                },
+                                items: <String>[
+                                  'Father',
+                                  'Mother',
+                                  'Son',
+                                  'Daughter',
+                                  'Other'
+                                ].map((String value) {
+                                  return new DropdownMenuItem<String>(
+                                    value: relation,
+                                    child: new Text(value),
+                                  );
+                                }).toList(),
+                              ),
+                            ),
+                            SizedBox(
+                              height: 20,
+                            ),
+                            RegularGreenButton(
+                              "Sign up",
+                              () async {
+                                if (_formKey.currentState.validate()) {
+                                  setState(() {
+                                    loading = true;
+                                  });
+                                  dynamic result =
+                                      await _auth.registerWithEmailAndPassword(
+                                          name, email, password, familyId);
+                                  Navigator.pop(context);
+                                  if (result == null) {
+                                    setState(() {
+                                      error = "please give a valid email";
+                                      loading = false;
+                                    });
+                                  }
                                 }
-                              }
-                            },
-                          ),
-                          SizedBox(
-                            height: 12,
-                          ),
-                          Text(
-                            error,
-                            style: TextStyle(color: Colors.red, fontSize: 14.0),
-                          )
-                        ],
+                              },
+                            ),
+                            SizedBox(
+                              height: 12,
+                            ),
+                            Text(
+                              error,
+                              style:
+                                  TextStyle(color: Colors.red, fontSize: 14.0),
+                            )
+                          ],
+                        ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
               ),
             ),
