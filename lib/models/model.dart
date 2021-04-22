@@ -7,8 +7,8 @@ class FamilyMember {
   bool isSurveyFilled = false;
   var surveyQuestionResponses = new Map();
   var qualitativeStudyResponses = new Map();
-  Map<String, double> totalScreenTime = new Map();
-  Map<String, List<double>> hourlyScreenTimeBreakdown = new Map();
+  var totalScreenTime = new Map();
+  var hourlyScreenTimeBreakdown = new Map();
 
   FamilyMember({
     this.id,
