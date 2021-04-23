@@ -52,31 +52,9 @@ class _FamilyMemberListState extends State<FamilyMemberList> {
                       margin:
                           EdgeInsets.fromLTRB(width / 30, 0, width / 30, 15),
                       child: Text(
-                        "All Surveys Filled, Thank you! We will now proceed with the qualitative study, where you need to spend just 5 mins a day giving your answers to two questions.",
+                        "All Surveys Filled, Thank you! We will now proceed with the qualitative study, where you need to spend just 5 mins a day giving your answers to two questions, for two weeks.",
                         style: TextStyle(
-                          fontSize: height / 45,
-                        ),
-                      ),
-                    ),
-                    Container(
-                      width: double.infinity,
-                      margin:
-                          EdgeInsets.fromLTRB(width / 30, 0, width / 30, 15),
-                      child: Text(
-                        "1. Tell us about at least one significant observation you made about your own smartphone usage.",
-                        style: TextStyle(
-                          fontSize: height / 45,
-                        ),
-                      ),
-                    ),
-                    Container(
-                      width: double.infinity,
-                      margin:
-                          EdgeInsets.fromLTRB(width / 30, 0, width / 30, 15),
-                      child: Text(
-                        "2. Tell us about at least one significant observation you made about your family's smartphone usage.",
-                        style: TextStyle(
-                          fontSize: height / 45,
+                          fontSize: height / 40,
                         ),
                       ),
                     ),
@@ -85,7 +63,7 @@ class _FamilyMemberListState extends State<FamilyMemberList> {
                       margin:
                           EdgeInsets.fromLTRB(width / 30, 0, width / 30, 15),
                       child: RegularGreenButton(
-                        "Continue",
+                        "Log Daily Entry",
                         () {
                           Navigator.push(
                             context,
