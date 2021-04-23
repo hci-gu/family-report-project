@@ -35,18 +35,17 @@ class _HomescreenState extends State<HomeScreen> {
                 child: Column(
                   children: [
                     Row(
-                      crossAxisAlignment: CrossAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: <Widget>[
-                        Flexible(
-                          child: Padding(
-                            padding: EdgeInsets.only(bottom: 15),
-                            child: Text(
-                              "Hello, ${widget.familyId}!",
-                              style: TextStyle(
-                                  color: Theme.of(context).primaryColor,
-                                  fontSize: height / 20,
-                                  fontWeight: FontWeight.bold),
-                            ),
+                        Padding(
+                          padding: EdgeInsets.only(bottom: 15),
+                          child: Text(
+                            "Hello, ${widget.familyId}!",
+                            overflow: TextOverflow.fade,
+                            style: TextStyle(
+                                color: Theme.of(context).primaryColor,
+                                fontSize: height / 20,
+                                fontWeight: FontWeight.bold),
                           ),
                         ),
                         Spacer(),
@@ -68,8 +67,10 @@ class _HomescreenState extends State<HomeScreen> {
                       ],
                     ),
                     Text(
-                      "You can report your estimates of smartphone usage for each family member from here and view comparisons at the end of the study. ",
-                      style: TextStyle(fontSize: height / 35),
+                      "You can report your estimates of smartphone usage for each family member from here and view comparisons at the end of the study.",
+                      style: TextStyle(
+                        fontSize: height / 35,
+                      ),
                     ),
                     Container(
                       width: double.infinity,
