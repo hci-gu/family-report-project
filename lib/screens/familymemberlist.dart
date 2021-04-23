@@ -24,11 +24,13 @@ class _FamilyMemberListState extends State<FamilyMemberList> {
     final familyMemberList = Provider.of<List<FamilyMember>>(context) ?? [];
     bool isAllSurveysFilled = true; // set default  to true
     int experienceDaysLogged;
+    var currentLoggedFamilyMember;
 
     //chnge isAllSurveyFilled to false if even one of the surveys are not filled
     for (var familyMember in familyMemberList) {
       if (familyMember.id == widget.currentLoggedInUserUid) {
         experienceDaysLogged = familyMember.noOfXPDaysLogged;
+        currentLoggedFamilyMember = familyMember;
         for (var key in familyMember.isSurveyFilled.keys) {
           if (familyMember.isSurveyFilled[key] == false) {
             isAllSurveysFilled = false;
@@ -142,6 +144,7 @@ class _FamilyMemberListState extends State<FamilyMemberList> {
                         familyMember: family,
                         familyId: widget.familyId,
                         currentLoggedInUserUid: widget.currentLoggedInUserUid,
+                        currentLoggedFamilyMember: currentLoggedFamilyMember,
                       )
                   ],
                 ),

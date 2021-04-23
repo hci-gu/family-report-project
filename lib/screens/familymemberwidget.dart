@@ -6,9 +6,13 @@ class FamilyMemberWidget extends StatelessWidget {
   final FamilyMember familyMember;
   final String currentLoggedInUserUid;
   final String familyId;
+  final FamilyMember currentLoggedFamilyMember;
 
   FamilyMemberWidget(
-      {this.familyMember, this.familyId, this.currentLoggedInUserUid});
+      {this.familyMember,
+      this.familyId,
+      this.currentLoggedInUserUid,
+      this.currentLoggedFamilyMember});
 
   @override
   Widget build(BuildContext context) {
@@ -69,7 +73,9 @@ class FamilyMemberWidget extends StatelessWidget {
               ),
               Spacer(),
               Container(
-                child: (familyMember.isSurveyFilled[familyMember.id] == false)
+                child: (currentLoggedFamilyMember
+                            .isSurveyFilled[familyMember.id] ==
+                        false)
                     ? Row(
                         children: [
                           Text(
