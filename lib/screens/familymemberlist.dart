@@ -22,16 +22,21 @@ class _FamilyMemberListState extends State<FamilyMemberList> {
     double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;
     final familyMemberList = Provider.of<List<FamilyMember>>(context) ?? [];
-    bool isAllSurveysFilled = true;
+    bool isAllSurveysFilled = true; // set default  to true
     int experienceDaysLogged;
+
+    //chnge isAllSurveyFilled to false if even one of the surveys are not filled
     for (var familyMember in familyMemberList) {
       if (familyMember.id == widget.currentLoggedInUserUid) {
         experienceDaysLogged = familyMember.noOfXPDaysLogged;
-      }
-      if (familyMember.isSurveyFilled == false) {
-        isAllSurveysFilled = false;
+        for (var key in familyMember.isSurveyFilled.keys) {
+          if (familyMember.isSurveyFilled[key] == false) {
+            isAllSurveysFilled = false;
+          }
+        }
       }
     }
+
     return Container(
       child: familyMemberList.isEmpty
           ? Center(
@@ -128,7 +133,9 @@ class _FamilyMemberListState extends State<FamilyMemberList> {
                       width: double.infinity,
                       margin:
                           EdgeInsets.fromLTRB(width / 30, 5, width / 30, 15),
-                      child: PendingResponses(),
+                      child: PendingResponses(
+                        currentLoggedInUserUid: widget.currentLoggedInUserUid,
+                      ),
                     ),
                     for (var family in familyMemberList)
                       FamilyMemberWidget(

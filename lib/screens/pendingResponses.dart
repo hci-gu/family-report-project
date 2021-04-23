@@ -3,7 +3,8 @@ import './../models/model.dart';
 import 'package:provider/provider.dart';
 
 class PendingResponses extends StatefulWidget {
-  PendingResponses({Key key}) : super(key: key);
+  final String currentLoggedInUserUid;
+  PendingResponses({Key key, this.currentLoggedInUserUid}) : super(key: key);
 
   @override
   _FamilyMemberListState createState() => _FamilyMemberListState();
@@ -15,9 +16,15 @@ class _FamilyMemberListState extends State<PendingResponses> {
     double height = MediaQuery.of(context).size.height;
     var familyMemberList = Provider.of<List<FamilyMember>>(context) ?? [];
     int pendingResponses = 0;
-    for (var family in familyMemberList) {
-      if (family.isSurveyFilled == false) {
-        pendingResponses = pendingResponses + 1;
+
+    //update pending responses counter
+    for (var familyMember in familyMemberList) {
+      if (familyMember.id == widget.currentLoggedInUserUid) {
+        for (var key in familyMember.isSurveyFilled.keys) {
+          if (familyMember.isSurveyFilled[key] == false) {
+            pendingResponses = pendingResponses + 1;
+          }
+        }
       }
     }
 

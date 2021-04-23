@@ -54,7 +54,7 @@ class FamilyMemberWidget extends StatelessWidget {
                   Padding(
                     padding: EdgeInsets.fromLTRB(0, 10, 0, 15),
                     child: Text(
-                      familyMember.isSurveyFilled.toString(),
+                      familyMember.relation,
                       overflow: TextOverflow.ellipsis,
                       maxLines: 1,
                       softWrap: false,
@@ -69,7 +69,7 @@ class FamilyMemberWidget extends StatelessWidget {
               ),
               Spacer(),
               Container(
-                child: (familyMember.isSurveyFilled == false)
+                child: (familyMember.isSurveyFilled[familyMember.id] == false)
                     ? Row(
                         children: [
                           Text(

@@ -17,27 +17,49 @@ class DatabaseService {
 
   Future createFamilyMemberDataWithName(
       String name, String age, String relation, String gender) async {
-    return await ref.doc(uid).set({
-      'name': name,
-      'id': uid,
-      'isSurveyFilled': false,
-      'relation': relation,
-      'age': age,
-      'gender': gender,
-      'surveyQuestionResponses': new Map<String, Map<String, String>>(),
-      'qualitativeStudyResponses': new Map<String, Map<String, String>>(),
-      'totalScreenTime': new Map<String, double>(),
-      'hourlyScreenTimeBreakdown': new Map<String, List<double>>(),
-      'noOfXPDaysLogged': 0,
+    await ref.get().then((snapshot) async {
+      var idList = [];
+      snapshot.docs.forEach((doc) => {idList.add(doc.data()['id'])});
+      idList.map((e) => print(e));
+      var temp = Map<String, bool>();
+      idList.map((id) {
+        print(id);
+        //setting the isSurveyFilled for uid by every other id to false
+        ref.doc(id).set(
+          {
+            'isSurveyFilled': {
+              uid: false,
+            }
+          },
+          SetOptions(merge: true),
+        );
+        temp[id] = false; // setting isSurveyFilled for 'id' by 'uid' to false
+      });
+      temp[uid] = false; // setting isSurveyFilled for 'uid' by 'uid' to false
+      temp.keys.map((e) => print(e));
+      return await ref.doc(uid).set({
+        'name': name,
+        'id': uid,
+        'isSurveyFilled': temp,
+        'relation': relation,
+        'age': age,
+        'gender': gender,
+        'surveyQuestionResponses': new Map<String, Map<String, String>>(),
+        'qualitativeStudyResponses': new Map<String, Map<String, String>>(),
+        'totalScreenTime': new Map<String, double>(),
+        'hourlyScreenTimeBreakdown': new Map<String, List<double>>(),
+        'noOfXPDaysLogged': 0,
+      });
     });
   }
 
   Future updateFamilyMemberSurveyResponses(
-      Map<String, Map<String, String>> surveyResponses) async {
+      Map<String, Map<String, String>> surveyResponses,
+      String surveyFilledForId) async {
     return await ref.doc(uid).set(
       {
         'surveyQuestionResponses': surveyResponses,
-        'isSurveyFilled': true,
+        'isSurveyFilled': {surveyFilledForId: true}
       },
       SetOptions(merge: true),
     );
