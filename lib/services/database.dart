@@ -20,10 +20,8 @@ class DatabaseService {
     await ref.get().then((snapshot) async {
       var idList = [];
       snapshot.docs.forEach((doc) => {idList.add(doc.data()['id'])});
-      idList.map((e) => print(e));
       var temp = Map<String, bool>();
-      idList.map((id) {
-        print(id);
+      for (var id in idList) {
         //setting the isSurveyFilled for uid by every other id to false
         ref.doc(id).set(
           {
@@ -34,9 +32,9 @@ class DatabaseService {
           SetOptions(merge: true),
         );
         temp[id] = false; // setting isSurveyFilled for 'id' by 'uid' to false
-      });
+      }
       temp[uid] = false; // setting isSurveyFilled for 'uid' by 'uid' to false
-      temp.keys.map((e) => print(e));
+
       return await ref.doc(uid).set({
         'name': name,
         'id': uid,
