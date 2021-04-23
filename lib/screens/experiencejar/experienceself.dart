@@ -13,7 +13,6 @@ class ExperienceSelf extends StatefulWidget {
 }
 
 class _ExperienceSelfState extends State<ExperienceSelf> {
-  final _formKey = GlobalKey<FormState>();
   String selfInput = "";
 
   @override
@@ -72,12 +71,29 @@ class _ExperienceSelfState extends State<ExperienceSelf> {
                 RegularGreenButton(
                   "Continue",
                   () {
+                    DateTime now = new DateTime.now();
+                    DateTime currentDate =
+                        new DateTime(now.year, now.month, now.day);
+                    print(
+                        "${currentDate.day}-${currentDate.month}-${currentDate.year}");
+                    var tempLogging = {
+                      "${currentDate.day}-${currentDate.month}-${currentDate.year}":
+                          {
+                        "Experience Logging Self": "",
+                        "Experience Logging Family": ""
+                      }
+                    };
+                    tempLogging[
+                            "${currentDate.day}-${currentDate.month}-${currentDate.year}"]
+                        ["Experience Logging Self"] = selfInput;
+
                     Navigator.push(
                       context,
                       MaterialPageRoute(
                         builder: (context) => ExperienceFamily(
                           familyId: widget.familyId,
                           currentLoggedInUserUid: widget.currentLoggedInUserUid,
+                          tempLogging: tempLogging,
                         ),
                       ),
                     );

@@ -1,3 +1,4 @@
+import 'package:family_report_project/screens/homescreen.dart';
 import 'package:flutter/material.dart';
 import './regulargreenbutton.dart';
 import 'dart:io';
@@ -28,7 +29,11 @@ class _ScreenTimeUploadState extends State<ScreenTimeUpload> {
       }
     });
 
-    uploadToStorage();
+    await uploadToStorage();
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => HomeScreen()),
+    );
   }
 
   //upload video to firebase storage

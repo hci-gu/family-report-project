@@ -2,17 +2,23 @@ import 'package:flutter/material.dart';
 import 'dart:async';
 import 'package:usage_stats/usage_stats.dart';
 import 'package:app_usage/app_usage.dart';
+import './../services/database.dart';
 
 class UsageData extends StatefulWidget {
+  final String familyId;
+  final String familyMemberUid;
+
+  UsageData({Key key, this.familyId, this.familyMemberUid}) : super(key: key);
   @override
   _UsageDataState createState() => _UsageDataState();
 }
 
 class _UsageDataState extends State<UsageData> {
   var totalDuration = new Duration(hours: 0, minutes: 0, seconds: 0);
-  var weeklyAvgDuration = new Duration(hours: 0, minutes: 0, seconds: 0);
   List<AppUsageInfo> events = [];
-  DateTime peakUsageDateTime;
+
+  Map<String, double> _lastTwoWeekUsage;
+  Map<String, List<double>> _lastTwoWeekUsageBreakdown;
 
   @override
   void initState() {
@@ -25,36 +31,58 @@ class _UsageDataState extends State<UsageData> {
   Future<void> initUsage() async {
     UsageStats.grantUsagePermission();
     try {
-      DateTime startDate = new DateTime.now().subtract(Duration(days: 1));
-      DateTime endDate = new DateTime.now();
+      DateTime now = new DateTime.now();
+      DateTime currentDate = new DateTime(now.year, now.month, now.day);
+      DateTime dayBeforeDate, startHour, endHour;
       List<AppUsageInfo> infos;
+      Map<String, double> lastTwoWeekUsage;
+      Map<String, List<double>> lastTwoWeekUsageBreakdown;
       Duration calcDuration = new Duration(hours: 0, minutes: 0, seconds: 0);
-      Duration weekDuration = new Duration(hours: 0, minutes: 0, seconds: 0);
-      Duration weekDurationAverage;
 
-      for (int j = 0; j < 7; j++) {
-        startDate = DateTime.now().subtract(Duration(days: j + 1));
-        endDate = DateTime.now().subtract(Duration(days: j));
-        infos = await AppUsage.getAppUsage(startDate, endDate);
+      //find last 2 weeks daily usage and store it in a map
+      for (int j = 0; j < 14; j++) {
+        currentDate = currentDate.subtract(Duration(days: j));
+        dayBeforeDate = currentDate.subtract(Duration(days: j + 1));
+        infos = await AppUsage.getAppUsage(currentDate, dayBeforeDate);
+
         for (int i = 0; i < infos.length; i++) {
           calcDuration = calcDuration + infos[i].usage;
         }
-        weekDuration = weekDuration + calcDuration;
-      }
-      weekDurationAverage = weekDuration ~/ 7;
 
-      startDate = DateTime.now().subtract(Duration(days: 1));
-      endDate = DateTime.now();
-      infos = await AppUsage.getAppUsage(startDate, endDate);
-      for (int i = 0; i < infos.length; i++) {
-        calcDuration = calcDuration + infos[i].usage;
+        lastTwoWeekUsage[dayBeforeDate.day.toString()] =
+            calcDuration.inHours.toDouble() +
+                calcDuration.inMinutes.toDouble() / 60;
+
+        calcDuration =
+            Duration(hours: 0, minutes: 0, seconds: 0); //reset variable
+
+        for (int k = 0; k < 24; k++) {
+          startHour = DateTime(now.year, now.month, now.day);
+          endHour = startHour.subtract(Duration(hours: k + 1));
+          infos = await AppUsage.getAppUsage(startHour, endHour);
+
+          for (int i = 0; i < infos.length; i++) {
+            calcDuration = calcDuration + infos[i].usage;
+          }
+
+          lastTwoWeekUsageBreakdown[dayBeforeDate.day.toString()].add(
+              calcDuration.inHours.toDouble() +
+                  calcDuration.inMinutes.toDouble() / 60);
+
+          calcDuration =
+              Duration(hours: 0, minutes: 0, seconds: 0); //reset variable
+        }
       }
+
+      await DatabaseService(widget.familyId, uid: widget.familyMemberUid)
+          .updateFamilyMemberScreenTimeData(
+              lastTwoWeekUsage, lastTwoWeekUsageBreakdown);
 
       this.setState(
         () {
+          _lastTwoWeekUsage = lastTwoWeekUsage;
+          _lastTwoWeekUsageBreakdown = lastTwoWeekUsageBreakdown;
           events = infos.reversed.toList();
-          totalDuration = calcDuration;
-          weeklyAvgDuration = weekDurationAverage;
         },
       );
     } on AppUsageException catch (exception) {
@@ -71,8 +99,7 @@ class _UsageDataState extends State<UsageData> {
         ),
         body: Column(
           children: <Widget>[
-            Text("the total screentime is - $totalDuration"),
-            Text("the weekly average screentime is - $weeklyAvgDuration"),
+            Text("the total screentime is - $_lastTwoWeekUsage"),
           ],
         ),
         floatingActionButton: FloatingActionButton(

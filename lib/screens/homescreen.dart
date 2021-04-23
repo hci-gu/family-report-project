@@ -22,6 +22,7 @@ class _HomescreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;
+
     return StreamProvider<List<FamilyMember>>.value(
       value: DatabaseService(widget.familyId).familyMemberList,
       initialData: null,

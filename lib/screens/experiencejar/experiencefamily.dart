@@ -1,3 +1,4 @@
+import 'package:family_report_project/services/database.dart';
 import 'package:flutter/material.dart';
 import '.././regulargreenbutton.dart';
 import '.././homescreen.dart';
@@ -5,7 +6,10 @@ import '.././homescreen.dart';
 class ExperienceFamily extends StatefulWidget {
   final String familyId;
   final String currentLoggedInUserUid;
-  ExperienceFamily({Key key, this.familyId, this.currentLoggedInUserUid})
+  final Map<String, Map<String, String>> tempLogging;
+
+  ExperienceFamily(
+      {Key key, this.familyId, this.currentLoggedInUserUid, this.tempLogging})
       : super(key: key);
 
   @override
@@ -71,6 +75,17 @@ class _ExperienceFamilyState extends State<ExperienceFamily> {
                   height: 20,
                 ),
                 RegularGreenButton("Finish Daily Log", () {
+                  DateTime now = new DateTime.now();
+                  DateTime currentDate =
+                      new DateTime(now.year, now.month, now.day);
+                  widget.tempLogging[
+                          "${currentDate.day}-${currentDate.month}-${currentDate.year}"]
+                      ["Experience Logging Family"] = familyInput;
+
+                  DatabaseService(widget.familyId,
+                          uid: widget.currentLoggedInUserUid)
+                      .updateFamilyMemberXPLoggingResponses(widget.tempLogging);
+
                   Navigator.push(
                     context,
                     MaterialPageRoute(

@@ -37,8 +37,9 @@ class FamilyMemberWidget extends StatelessWidget {
               ),
               Column(
                 children: [
-                  Padding(
-                    padding: EdgeInsets.fromLTRB(0, 10, 0, 10),
+                  Container(
+                    width: width / 2.2,
+                    margin: EdgeInsets.fromLTRB(0, 10, 0, 10),
                     child: Text(
                       familyMember.name,
                       overflow: TextOverflow.ellipsis,

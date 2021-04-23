@@ -5,6 +5,7 @@ class FamilyMember {
   String age;
   String gender;
   bool isSurveyFilled = false;
+  int noOfXPDaysLogged = 0;
   var surveyQuestionResponses = new Map();
   var qualitativeStudyResponses = new Map();
   var totalScreenTime = new Map();
@@ -21,5 +22,6 @@ class FamilyMember {
     this.hourlyScreenTimeBreakdown,
     this.totalScreenTime,
     this.isSurveyFilled,
+    this.noOfXPDaysLogged,
   });
 }
