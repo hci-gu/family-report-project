@@ -6,9 +6,13 @@ class FamilyMemberWidget extends StatelessWidget {
   final FamilyMember familyMember;
   final String currentLoggedInUserUid;
   final String familyId;
+  final FamilyMember currentLoggedFamilyMember;
 
   FamilyMemberWidget(
-      {this.familyMember, this.familyId, this.currentLoggedInUserUid});
+      {this.familyMember,
+      this.familyId,
+      this.currentLoggedInUserUid,
+      this.currentLoggedFamilyMember});
 
   @override
   Widget build(BuildContext context) {
@@ -54,7 +58,7 @@ class FamilyMemberWidget extends StatelessWidget {
                   Padding(
                     padding: EdgeInsets.fromLTRB(0, 10, 0, 15),
                     child: Text(
-                      familyMember.isSurveyFilled.toString(),
+                      familyMember.relation,
                       overflow: TextOverflow.ellipsis,
                       maxLines: 1,
                       softWrap: false,
@@ -69,7 +73,9 @@ class FamilyMemberWidget extends StatelessWidget {
               ),
               Spacer(),
               Container(
-                child: (familyMember.isSurveyFilled == false)
+                child: (currentLoggedFamilyMember
+                            .isSurveyFilled[familyMember.id] ==
+                        false)
                     ? Row(
                         children: [
                           Text(

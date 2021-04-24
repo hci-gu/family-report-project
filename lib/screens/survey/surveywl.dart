@@ -93,7 +93,8 @@ class _SurveyWLState extends State<SurveyWL> {
 
                   DatabaseService(widget.familyId,
                           uid: widget.currentLoggedInUserUid)
-                      .updateFamilyMemberSurveyResponses(widget.tempSurvey);
+                      .updateFamilyMemberSurveyResponses(
+                          widget.tempSurvey, widget.familyMember.id);
 
                   Navigator.push(
                     context,

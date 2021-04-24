@@ -4,7 +4,7 @@ class FamilyMember {
   String relation;
   String age;
   String gender;
-  bool isSurveyFilled = false;
+  var isSurveyFilled = new Map();
   int noOfXPDaysLogged = 0;
   var surveyQuestionResponses = new Map();
   var qualitativeStudyResponses = new Map();

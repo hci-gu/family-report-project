@@ -31,20 +31,13 @@ class AuthService {
     String gender,
   ) async {
     try {
-      print(name);
-      print(age);
-      print(relation);
       UserCredential result = await _auth.createUserWithEmailAndPassword(
           email: email, password: password);
 
       // set familyID and FamilyMember UID to shared preferences for quick reference without using provider
-      bool test =
-          await SharedPreferencesHelper.setFamilyCollectionName(familyId);
-      print("$test familyID saved in shared Preferences");
 
-      bool uidTest =
-          await SharedPreferencesHelper.setFamilyMemberUid(result.user.uid);
-      print("$uidTest familyID saved in shared Preferences");
+      await SharedPreferencesHelper.setFamilyCollectionName(familyId);
+      await SharedPreferencesHelper.setFamilyMemberUid(result.user.uid);
 
       await DatabaseService(familyId, uid: result.user.uid)
           .createFamilyMemberDataWithName(name, age, relation, gender);
