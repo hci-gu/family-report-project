@@ -19,7 +19,7 @@ class _RegisterState extends State<Register> {
   String password = "";
   String familyId = "";
   String age = "";
-  String gender = "";
+  String gender = "Male";
   String relation = 'Mother';
   String error = "";
 
@@ -146,6 +146,32 @@ class _RegisterState extends State<Register> {
                                   age = val;
                                 });
                               },
+                            ),
+                            SizedBox(
+                              height: 20,
+                            ),
+                            ButtonTheme(
+                              alignedDropdown: true,
+                              child: DropdownButton<String>(
+                                isExpanded: true,
+                                hint: Text("Enter your gender"),
+                                value: gender,
+                                onChanged: (String newValue) {
+                                  setState(() {
+                                    gender = newValue;
+                                  });
+                                },
+                                items: <String>[
+                                  'Male',
+                                  'Female',
+                                  'Other',
+                                ].map<DropdownMenuItem<String>>((String value) {
+                                  return DropdownMenuItem<String>(
+                                    value: value,
+                                    child: Text(value),
+                                  );
+                                }).toList(),
+                              ),
                             ),
                             SizedBox(
                               height: 20,
