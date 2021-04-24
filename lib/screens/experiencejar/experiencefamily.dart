@@ -89,10 +89,11 @@ class _ExperienceFamilyState extends State<ExperienceFamily> {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                        builder: (context) => HomeScreen(
-                              familyId: widget.familyId,
-                              loggedInUserUid: widget.currentLoggedInUserUid,
-                            )),
+                      builder: (context) => HomeScreen(
+                        familyId: widget.familyId,
+                        loggedInUserUid: widget.currentLoggedInUserUid,
+                      ),
+                    ),
                   );
                 }),
               ],
