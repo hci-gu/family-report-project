@@ -63,6 +63,15 @@ class DatabaseService {
     );
   }
 
+  Future updateExperienceLogSchedule(Map<String, bool> logSchedule) async {
+    return await ref.doc(uid).set(
+      {
+        'experienceLogSchedule': logSchedule,
+      },
+      SetOptions(merge: true),
+    );
+  }
+
   Future updateFamilyMemberXPLoggingResponses(
       Map<String, Map<String, String>> loggedResponses) async {
     ref.doc(uid).get().then((document) async {
@@ -109,6 +118,7 @@ class DatabaseService {
       qualitativeStudyResponses: snapshot.data()['qualitativeStudyResponses'],
       hourlyScreenTimeBreakdown: snapshot.data()['hourlyScreenTimeBreakdown'],
       noOfXPDaysLogged: snapshot.data()['noOfXPDaysLogged'],
+      experienceLogSchedule: snapshot.data()['experienceLogSchedule'],
     );
   }
 
@@ -126,6 +136,7 @@ class DatabaseService {
         qualitativeStudyResponses: doc.data()['qualitativeStudyResponses'],
         hourlyScreenTimeBreakdown: doc.data()['hourlyScreenTimeBreakdown'],
         noOfXPDaysLogged: doc.data()['noOfXPDaysLogged'],
+        experienceLogSchedule: doc.data()['experienceLogSchedule'],
       );
     }).toList();
   }
