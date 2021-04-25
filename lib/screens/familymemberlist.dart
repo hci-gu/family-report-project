@@ -5,10 +5,12 @@ import 'familymemberwidget.dart';
 import './regulargreenbutton.dart';
 import './experiencejar/experienceself.dart';
 import './pendingResponses.dart';
+import './../services/database.dart';
 
 class FamilyMemberList extends StatefulWidget {
   final String familyId;
   final String currentLoggedInUserUid;
+
   FamilyMemberList({Key key, this.familyId, this.currentLoggedInUserUid})
       : super(key: key);
 
@@ -19,21 +21,38 @@ class FamilyMemberList extends StatefulWidget {
 class _FamilyMemberListState extends State<FamilyMemberList> {
   @override
   Widget build(BuildContext context) {
+    DateTime now = DateTime.now();
+    DateTime currentDate = DateTime(now.year, now.month, now.day);
+    var experienceLogSchedule = Map<String, bool>();
     double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;
     final familyMemberList = Provider.of<List<FamilyMember>>(context) ?? [];
     bool isAllSurveysFilled = true; // set default  to true
     int experienceDaysLogged;
     var currentLoggedFamilyMember;
-
     //chnge isAllSurveyFilled to false if even one of the surveys are not filled
     for (var familyMember in familyMemberList) {
       if (familyMember.id == widget.currentLoggedInUserUid) {
         experienceDaysLogged = familyMember.noOfXPDaysLogged;
         currentLoggedFamilyMember = familyMember;
+        experienceLogSchedule = familyMember
+            .experienceLogSchedule; //update the log schedule from firebase
         for (var key in familyMember.isSurveyFilled.keys) {
           if (familyMember.isSurveyFilled[key] == false) {
-            isAllSurveysFilled = false;
+            setState(() {
+              isAllSurveysFilled =
+                  false; //set to false if even one survey is not filled
+            });
+          } else {
+            //initialise logging schedule once all surveys are filled
+            var now = DateTime.now();
+            var today = DateTime(now.year, now.month, now.day);
+            for (int k = 0; k < 14; k++) {
+              experienceLogSchedule[today.add(Duration(days: k)).toString()] =
+                  false;
+            }
+            DatabaseService(widget.familyId, uid: widget.currentLoggedInUserUid)
+                .updateExperienceLogSchedule(experienceLogSchedule);
           }
         }
       }
@@ -76,7 +95,7 @@ class _FamilyMemberListState extends State<FamilyMemberList> {
                         child: Text(
                           (experienceDaysLogged != 14)
                               ? "$experienceDaysLogged days logged"
-                              : "All days Logged!",
+                              : "All days Logged, nice!",
                           style: TextStyle(
                               fontSize: height / 50,
                               color: Theme.of(context).primaryColor),
@@ -98,22 +117,31 @@ class _FamilyMemberListState extends State<FamilyMemberList> {
                         width: double.infinity,
                         margin: EdgeInsets.only(bottom: 15),
                         child: (experienceDaysLogged != 14)
-                            ? RegularGreenButton(
-                                "Log Daily Entry",
-                                () {
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                      builder: (context) => ExperienceSelf(
-                                        familyId: widget.familyId,
-                                        currentLoggedInUserUid:
-                                            widget.currentLoggedInUserUid,
-                                      ),
-                                    ),
-                                  );
-                                },
-                              )
-                            : Container(),
+                            ? ((experienceLogSchedule[currentDate] == false)
+                                ? RegularGreenButton(
+                                    "Log Daily Entry",
+                                    () {
+                                      Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                          builder: (context) => ExperienceSelf(
+                                            familyId: widget.familyId,
+                                            currentLoggedInUserUid:
+                                                widget.currentLoggedInUserUid,
+                                            experienceLogSchedule:
+                                                experienceLogSchedule,
+                                          ),
+                                        ),
+                                      );
+                                    },
+                                  )
+                                : Text("Today's log filled, Nice!"))
+                            : Text(
+                                "You're all set!",
+                                style: TextStyle(
+                                    fontSize: height / 30,
+                                    color: Theme.of(context).primaryColor),
+                              ),
                       ),
                     ],
                   ),

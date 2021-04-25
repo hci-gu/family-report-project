@@ -5,7 +5,12 @@ import './experiencefamily.dart';
 class ExperienceSelf extends StatefulWidget {
   final String familyId;
   final String currentLoggedInUserUid;
-  ExperienceSelf({Key key, this.familyId, this.currentLoggedInUserUid})
+  final experienceLogSchedule;
+  ExperienceSelf(
+      {Key key,
+      this.familyId,
+      this.currentLoggedInUserUid,
+      this.experienceLogSchedule})
       : super(key: key);
 
   @override

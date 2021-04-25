@@ -7,9 +7,14 @@ class ExperienceFamily extends StatefulWidget {
   final String familyId;
   final String currentLoggedInUserUid;
   final Map<String, Map<String, String>> tempLogging;
+  final experienceLogSchedule;
 
   ExperienceFamily(
-      {Key key, this.familyId, this.currentLoggedInUserUid, this.tempLogging})
+      {Key key,
+      this.familyId,
+      this.currentLoggedInUserUid,
+      this.tempLogging,
+      this.experienceLogSchedule})
       : super(key: key);
 
   @override
@@ -75,16 +80,20 @@ class _ExperienceFamilyState extends State<ExperienceFamily> {
                   height: 20,
                 ),
                 RegularGreenButton("Finish Daily Log", () {
-                  DateTime now = new DateTime.now();
-                  DateTime currentDate =
-                      new DateTime(now.year, now.month, now.day);
+                  DateTime now = DateTime.now();
+                  DateTime currentDate = DateTime(now.year, now.month, now.day);
                   widget.tempLogging[
                           "${currentDate.day}-${currentDate.month}-${currentDate.year}"]
                       ["Experience Logging Family"] = familyInput;
+                  widget.experienceLogSchedule[currentDate] = true;
 
                   DatabaseService(widget.familyId,
                           uid: widget.currentLoggedInUserUid)
                       .updateFamilyMemberXPLoggingResponses(widget.tempLogging);
+                  DatabaseService(widget.familyId,
+                          uid: widget.currentLoggedInUserUid)
+                      .updateExperienceLogSchedule(
+                          widget.experienceLogSchedule);
 
                   Navigator.push(
                     context,
