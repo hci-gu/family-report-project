@@ -4,7 +4,7 @@
         android:name="android.permission.PACKAGE_USAGE_STATS"
         tools:ignore="ProtectedPermissions" />
    <application
-        android:label="family_report_project"
+        android:label="Family report"
         android:icon="@mipmap/ic_launcher">
         <activity
             android:name=".MainActivity"
