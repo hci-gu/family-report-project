@@ -5,7 +5,7 @@ import './experiencefamily.dart';
 class ExperienceSelf extends StatefulWidget {
   final String familyId;
   final String currentLoggedInUserUid;
-  final experienceLogSchedule;
+  final Map<String, bool> experienceLogSchedule;
   ExperienceSelf(
       {Key key,
       this.familyId,
@@ -79,8 +79,7 @@ class _ExperienceSelfState extends State<ExperienceSelf> {
                     DateTime now = new DateTime.now();
                     DateTime currentDate =
                         new DateTime(now.year, now.month, now.day);
-                    print(
-                        "${currentDate.day}-${currentDate.month}-${currentDate.year}");
+
                     var tempLogging = {
                       "${currentDate.day}-${currentDate.month}-${currentDate.year}":
                           {
@@ -99,6 +98,7 @@ class _ExperienceSelfState extends State<ExperienceSelf> {
                           familyId: widget.familyId,
                           currentLoggedInUserUid: widget.currentLoggedInUserUid,
                           tempLogging: tempLogging,
+                          experienceLogSchedule: widget.experienceLogSchedule,
                         ),
                       ),
                     );

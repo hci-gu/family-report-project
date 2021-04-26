@@ -19,45 +19,46 @@ class FamilyMemberList extends StatefulWidget {
 }
 
 class _FamilyMemberListState extends State<FamilyMemberList> {
+  bool isLoggingScheduleInitialised = false;
+  bool isAllSurveysFilled = false; // set default  to true
+
+  var experienceLogSchedule = Map<String, bool>();
+  int experienceDaysLogged;
+
   @override
   Widget build(BuildContext context) {
     DateTime now = DateTime.now();
     DateTime currentDate = DateTime(now.year, now.month, now.day);
-    var experienceLogSchedule = Map<String, bool>();
     double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;
     final familyMemberList = Provider.of<List<FamilyMember>>(context) ?? [];
-    bool isAllSurveysFilled = true; // set default  to true
-    int experienceDaysLogged;
     var currentLoggedFamilyMember;
+
     //chnge isAllSurveyFilled to false if even one of the surveys are not filled
     for (var familyMember in familyMemberList) {
       if (familyMember.id == widget.currentLoggedInUserUid) {
         experienceDaysLogged = familyMember.noOfXPDaysLogged;
         currentLoggedFamilyMember = familyMember;
-        experienceLogSchedule = familyMember
-            .experienceLogSchedule; //update the log schedule from firebase
-        for (var key in familyMember.isSurveyFilled.keys) {
-          if (familyMember.isSurveyFilled[key] == false) {
-            setState(() {
-              isAllSurveysFilled =
-                  false; //set to false if even one survey is not filled
-            });
-          } else {
-            //initialise logging schedule once all surveys are filled
-            var now = DateTime.now();
-            var today = DateTime(now.year, now.month, now.day);
-            for (int k = 0; k < 14; k++) {
-              experienceLogSchedule[today.add(Duration(days: k)).toString()] =
-                  false;
-            }
-            DatabaseService(widget.familyId, uid: widget.currentLoggedInUserUid)
-                .updateExperienceLogSchedule(experienceLogSchedule);
-          }
+        if (isAllSurveysFilled == true &&
+            isLoggingScheduleInitialised == true) {
+          experienceLogSchedule = familyMember
+              .experienceLogSchedule; //update the log schedule from firebase
         }
+        isAllSurveysFilled = familyMember.isSurveyFilled.values
+            .every((element) => element == true);
       }
     }
 
+    if (isAllSurveysFilled == true && isLoggingScheduleInitialised == false) {
+      //initialise logging schedule once all surveys are filled
+      for (int k = 0; k < 14; k++) {
+        experienceLogSchedule[currentDate.add(Duration(days: k)).toString()] =
+            false;
+      }
+      DatabaseService(widget.familyId, uid: widget.currentLoggedInUserUid)
+          .updateExperienceLogSchedule(experienceLogSchedule);
+      isLoggingScheduleInitialised = true;
+    }
     return Container(
       child: familyMemberList.isEmpty
           ? Center(
@@ -117,7 +118,8 @@ class _FamilyMemberListState extends State<FamilyMemberList> {
                         width: double.infinity,
                         margin: EdgeInsets.only(bottom: 15),
                         child: (experienceDaysLogged != 14)
-                            ? ((experienceLogSchedule[currentDate] == false)
+                            ? ((experienceLogSchedule[currentDate.toString()] ==
+                                    false)
                                 ? RegularGreenButton(
                                     "Log Daily Entry",
                                     () {
@@ -126,10 +128,10 @@ class _FamilyMemberListState extends State<FamilyMemberList> {
                                         MaterialPageRoute(
                                           builder: (context) => ExperienceSelf(
                                             familyId: widget.familyId,
-                                            currentLoggedInUserUid:
-                                                widget.currentLoggedInUserUid,
                                             experienceLogSchedule:
                                                 experienceLogSchedule,
+                                            currentLoggedInUserUid:
+                                                widget.currentLoggedInUserUid,
                                           ),
                                         ),
                                       );

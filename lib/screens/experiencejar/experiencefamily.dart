@@ -7,7 +7,7 @@ class ExperienceFamily extends StatefulWidget {
   final String familyId;
   final String currentLoggedInUserUid;
   final Map<String, Map<String, String>> tempLogging;
-  final experienceLogSchedule;
+  final Map<String, bool> experienceLogSchedule;
 
   ExperienceFamily(
       {Key key,
@@ -79,21 +79,20 @@ class _ExperienceFamilyState extends State<ExperienceFamily> {
                 SizedBox(
                   height: 20,
                 ),
-                RegularGreenButton("Finish Daily Log", () {
+                RegularGreenButton("Finish Daily Log", () async {
                   DateTime now = DateTime.now();
                   DateTime currentDate = DateTime(now.year, now.month, now.day);
                   widget.tempLogging[
                           "${currentDate.day}-${currentDate.month}-${currentDate.year}"]
                       ["Experience Logging Family"] = familyInput;
-                  widget.experienceLogSchedule[currentDate] = true;
 
-                  DatabaseService(widget.familyId,
+                  widget.experienceLogSchedule[currentDate.toString()] = true;
+
+                  //update logging responses, logging schedule and no of responses on firebase
+                  await DatabaseService(widget.familyId,
                           uid: widget.currentLoggedInUserUid)
-                      .updateFamilyMemberXPLoggingResponses(widget.tempLogging);
-                  DatabaseService(widget.familyId,
-                          uid: widget.currentLoggedInUserUid)
-                      .updateExperienceLogSchedule(
-                          widget.experienceLogSchedule);
+                      .updateFamilyMemberXPLoggingResponses(
+                          widget.tempLogging, widget.experienceLogSchedule);
 
                   Navigator.push(
                     context,

@@ -74,11 +74,13 @@ class DatabaseService {
   }
 
   Future updateFamilyMemberXPLoggingResponses(
-      Map<String, Map<String, String>> loggedResponses) async {
+      Map<String, Map<String, String>> loggedResponses,
+      Map<String, bool> logSchedule) async {
     ref.doc(uid).get().then((document) async {
       var temp;
       temp = document.get('noOfXPDaysLogged');
       return await ref.doc(uid).set({
+        'experienceLogSchedule': logSchedule,
         'qualitativeStudyResponses': loggedResponses,
         'noOfXPDaysLogged': temp + 1
       }, SetOptions(merge: true));

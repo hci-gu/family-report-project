@@ -10,7 +10,7 @@ class FamilyMember {
   var qualitativeStudyResponses = new Map();
   var totalScreenTime = new Map();
   var hourlyScreenTimeBreakdown = new Map();
-  var experienceLogSchedule = new Map();
+  var experienceLogSchedule = new Map<String, bool>();
 
   FamilyMember({
     this.id,
