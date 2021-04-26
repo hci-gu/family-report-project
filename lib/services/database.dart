@@ -47,6 +47,7 @@ class DatabaseService {
         'totalScreenTime': new Map<String, double>(),
         'hourlyScreenTimeBreakdown': new Map<String, List<double>>(),
         'noOfXPDaysLogged': 0,
+        'experienceLogSchedule': new Map<String, bool>(),
       });
     });
   }
@@ -136,7 +137,8 @@ class DatabaseService {
         qualitativeStudyResponses: doc.data()['qualitativeStudyResponses'],
         hourlyScreenTimeBreakdown: doc.data()['hourlyScreenTimeBreakdown'],
         noOfXPDaysLogged: doc.data()['noOfXPDaysLogged'],
-        experienceLogSchedule: doc.data()['experienceLogSchedule'],
+        experienceLogSchedule:
+            Map<String, bool>.from(doc.data()['experienceLogSchedule']),
       );
     }).toList();
   }
