@@ -4,7 +4,6 @@ class SharedPreferencesHelper {
   static final String _collectionNameCode = "familyID";
   static final String _familyMemberUidCode = "familyMemberUID";
   static final String _screenTimeUploadCheckCode = "screenTimeUploadCheck";
-  static final String _noOfFamilyMembers = "familyMemberCount";
 
   static Future<String> getFamilyCollectionName() async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
