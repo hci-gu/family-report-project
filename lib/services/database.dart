@@ -47,6 +47,7 @@ class DatabaseService {
         'totalScreenTime': new Map<String, double>(),
         'hourlyScreenTimeBreakdown': new Map<String, List<double>>(),
         'noOfXPDaysLogged': 0,
+        'experienceLogSchedule': new Map<String, bool>(),
       });
     });
   }
@@ -63,12 +64,23 @@ class DatabaseService {
     );
   }
 
+  Future updateExperienceLogSchedule(Map<String, bool> logSchedule) async {
+    return await ref.doc(uid).set(
+      {
+        'experienceLogSchedule': logSchedule,
+      },
+      SetOptions(merge: true),
+    );
+  }
+
   Future updateFamilyMemberXPLoggingResponses(
-      Map<String, Map<String, String>> loggedResponses) async {
+      Map<String, Map<String, String>> loggedResponses,
+      Map<String, bool> logSchedule) async {
     ref.doc(uid).get().then((document) async {
       var temp;
       temp = document.get('noOfXPDaysLogged');
       return await ref.doc(uid).set({
+        'experienceLogSchedule': logSchedule,
         'qualitativeStudyResponses': loggedResponses,
         'noOfXPDaysLogged': temp + 1
       }, SetOptions(merge: true));
@@ -109,6 +121,7 @@ class DatabaseService {
       qualitativeStudyResponses: snapshot.data()['qualitativeStudyResponses'],
       hourlyScreenTimeBreakdown: snapshot.data()['hourlyScreenTimeBreakdown'],
       noOfXPDaysLogged: snapshot.data()['noOfXPDaysLogged'],
+      experienceLogSchedule: snapshot.data()['experienceLogSchedule'],
     );
   }
 
@@ -126,6 +139,8 @@ class DatabaseService {
         qualitativeStudyResponses: doc.data()['qualitativeStudyResponses'],
         hourlyScreenTimeBreakdown: doc.data()['hourlyScreenTimeBreakdown'],
         noOfXPDaysLogged: doc.data()['noOfXPDaysLogged'],
+        experienceLogSchedule:
+            Map<String, bool>.from(doc.data()['experienceLogSchedule']),
       );
     }).toList();
   }

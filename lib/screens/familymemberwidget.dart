@@ -42,7 +42,7 @@ class FamilyMemberWidget extends StatelessWidget {
               Column(
                 children: [
                   Container(
-                    width: width / 2.2,
+                    width: width / 2.5,
                     margin: EdgeInsets.fromLTRB(0, 10, 0, 10),
                     child: Text(
                       familyMember.name,

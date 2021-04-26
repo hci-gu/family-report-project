@@ -3,10 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../models/model.dart';
 import '../services/database.dart';
-import './screentimeupload.dart';
+
 import './settings.dart';
 import './usage.dart';
-import 'dart:io';
 
 class HomeScreen extends StatefulWidget {
   final String familyId;
@@ -73,57 +72,30 @@ class _HomescreenState extends State<HomeScreen> {
                         fontSize: height / 35,
                       ),
                     ),
-                    Container(
-                      width: double.infinity,
-                      margin: EdgeInsets.only(top: 10),
-                      child: TextButton.icon(
-                        style: ButtonStyle(alignment: Alignment.centerLeft),
-                        onPressed: () {
-                          Navigator.of(context).push(
-                            MaterialPageRoute(
-                              builder: (context) => UsageData(),
-                            ),
-                          );
-                        },
-                        icon: Icon(
-                          Icons.share,
-                          color: Theme.of(context).primaryColor,
-                        ),
-                        label: Text(
-                          "Show usage data",
-                          style: TextStyle(
-                              color: Theme.of(context).primaryColor,
-                              fontSize: height / 37),
-                        ),
-                      ),
-                    ),
-                    (Platform.isIOS == true)
-                        ? Container(
-                            width: double.infinity,
-                            margin: EdgeInsets.only(top: 10),
-                            child: TextButton.icon(
-                              style:
-                                  ButtonStyle(alignment: Alignment.centerLeft),
-                              onPressed: () {
-                                Navigator.of(context).push(
-                                  MaterialPageRoute(
-                                    builder: (context) => ScreenTimeUpload(),
-                                  ),
-                                );
-                              },
-                              icon: Icon(
-                                Icons.upload_file,
-                                color: Theme.of(context).primaryColor,
-                              ),
-                              label: Text(
-                                "Upload screentime data",
-                                style: TextStyle(
-                                    color: Theme.of(context).primaryColor,
-                                    fontSize: height / 37),
-                              ),
-                            ),
-                          )
-                        : Container(),
+                    // Container(
+                    //   width: double.infinity,
+                    //   margin: EdgeInsets.only(top: 10),
+                    //   child: TextButton.icon(
+                    //     style: ButtonStyle(alignment: Alignment.centerLeft),
+                    //     onPressed: () {
+                    //       Navigator.of(context).push(
+                    //         MaterialPageRoute(
+                    //           builder: (context) => UsageData(),
+                    //         ),
+                    //       );
+                    //     },
+                    //     icon: Icon(
+                    //       Icons.share,
+                    //       color: Theme.of(context).primaryColor,
+                    //     ),
+                    //     label: Text(
+                    //       "Show usage data",
+                    //       style: TextStyle(
+                    //           color: Theme.of(context).primaryColor,
+                    //           fontSize: height / 37),
+                    //     ),
+                    //   ),
+                    // ),
                   ],
                 ),
               ),
