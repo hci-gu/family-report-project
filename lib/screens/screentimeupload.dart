@@ -145,6 +145,20 @@ class _ScreenTimeUploadState extends State<ScreenTimeUpload> {
             Container(
               width: double.infinity,
               margin: EdgeInsets.only(top: 10),
+              child:
+                  Text("Now scroll down to view the no of smartphone pickups"),
+            ),
+            Container(
+              margin: EdgeInsets.only(top: 10),
+              width: double.infinity,
+              child: Text(
+                "Step - 6",
+                style: TextStyle(fontWeight: FontWeight.bold),
+              ),
+            ),
+            Container(
+              width: double.infinity,
+              margin: EdgeInsets.only(top: 10),
               child: Text(
                   "Once done, tap on the top left red status (if on iphone X or above) or the top red status bar to turn off screen recording"),
             ),
@@ -152,7 +166,7 @@ class _ScreenTimeUploadState extends State<ScreenTimeUpload> {
               margin: EdgeInsets.only(top: 10),
               width: double.infinity,
               child: Text(
-                "Step - 6",
+                "Step - 7",
                 style: TextStyle(fontWeight: FontWeight.bold),
               ),
             ),

@@ -6,6 +6,8 @@ import './regulargreenbutton.dart';
 import './experiencejar/experienceself.dart';
 import './pendingResponses.dart';
 import './../services/database.dart';
+import './screentimeupload.dart';
+import 'dart:io';
 
 class FamilyMemberList extends StatefulWidget {
   final String familyId;
@@ -19,7 +21,7 @@ class FamilyMemberList extends StatefulWidget {
 }
 
 class _FamilyMemberListState extends State<FamilyMemberList> {
-  bool isLoggingScheduleInitialised = false;
+  bool isLoggingScheduleInitialised;
   bool isAllSurveysFilled = false; // set default  to true
 
   var experienceLogSchedule = Map<String, bool>();
@@ -46,6 +48,9 @@ class _FamilyMemberListState extends State<FamilyMemberList> {
         }
         isAllSurveysFilled = familyMember.isSurveyFilled.values
             .every((element) => element == true);
+        if (isAllSurveysFilled == false) {
+          isLoggingScheduleInitialised = false;
+        }
       }
     }
 
@@ -59,6 +64,8 @@ class _FamilyMemberListState extends State<FamilyMemberList> {
           .updateExperienceLogSchedule(experienceLogSchedule);
       isLoggingScheduleInitialised = true;
     }
+
+    // print(experienceLogSchedule[currentDate.toString()]);
     return Container(
       child: familyMemberList.isEmpty
           ? Center(
@@ -70,6 +77,33 @@ class _FamilyMemberListState extends State<FamilyMemberList> {
                   child: Column(
                     //experience jar section
                     children: [
+                      (Platform.isIOS == true)
+                          ? Container(
+                              width: double.infinity,
+                              margin: EdgeInsets.only(bottom: 10),
+                              child: TextButton.icon(
+                                style: ButtonStyle(
+                                    alignment: Alignment.centerLeft),
+                                onPressed: () {
+                                  Navigator.of(context).push(
+                                    MaterialPageRoute(
+                                      builder: (context) => ScreenTimeUpload(),
+                                    ),
+                                  );
+                                },
+                                icon: Icon(
+                                  Icons.upload_file,
+                                  color: Theme.of(context).primaryColor,
+                                ),
+                                label: Text(
+                                  "Upload screentime data",
+                                  style: TextStyle(
+                                      color: Theme.of(context).primaryColor,
+                                      fontSize: height / 37),
+                                ),
+                              ),
+                            )
+                          : Container(),
                       Container(
                         width: double.infinity,
                         margin: EdgeInsets.only(bottom: 15),
