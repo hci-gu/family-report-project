@@ -65,6 +65,8 @@ class _ScreenTimeUploadState extends State<ScreenTimeUpload> {
 
   @override
   Widget build(BuildContext context) {
+    double width = MediaQuery.of(context).size.width;
+    double height = MediaQuery.of(context).size.height;
     return Scaffold(
       appBar: AppBar(
         title: Text("Screen Time Upload"),
@@ -78,6 +80,15 @@ class _ScreenTimeUploadState extends State<ScreenTimeUpload> {
               width: double.infinity,
               child: Text(
                   "This was built for iOS users to give their screentime usage. Due to restrictions, you will have to take a screentime recording of the screentime and upload it. Below are instructions on how you can do it. "),
+            ),
+            Container(
+              margin: EdgeInsets.only(top: 15),
+              width: double.infinity,
+              child: Text(
+                "If iOS screentime feature is disabled for you, turn it on and come back here after two weeks.",
+                style: TextStyle(
+                    fontSize: height / 40, fontWeight: FontWeight.bold),
+              ),
             ),
             Container(
               margin: EdgeInsets.only(top: 30),
@@ -118,7 +129,7 @@ class _ScreenTimeUploadState extends State<ScreenTimeUpload> {
               width: double.infinity,
               margin: EdgeInsets.only(top: 10),
               child: Text(
-                  "Turn on Screentime if its turned off. If it's already switched on, click on See All Activity -> Week"),
+                  "If its turned OFF, switch it on and come back to this page after two weeks. Don't worry, you'll be reminded by the researcher. If it's already switched ON, click on See All Activity -> Week and proceed with the next steps."),
             ),
             Container(
               margin: EdgeInsets.only(top: 10),

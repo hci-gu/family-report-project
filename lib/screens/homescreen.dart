@@ -3,9 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../models/model.dart';
 import '../services/database.dart';
-
 import './settings.dart';
 import './usage.dart';
+import 'dart:io';
 
 class HomeScreen extends StatefulWidget {
   final String familyId;
@@ -72,6 +72,17 @@ class _HomescreenState extends State<HomeScreen> {
                         fontSize: height / 35,
                       ),
                     ),
+                    ((Platform.isIOS == true)
+                        ? Container(
+                            margin: EdgeInsets.only(top: 15),
+                            child: Text(
+                              "iOS Users - If you have the screentime feature turned off, turn it on now. You can find it in Settings -> Screentime. Others, ignore this.",
+                              style: TextStyle(
+                                  fontSize: height / 40,
+                                  fontWeight: FontWeight.bold),
+                            ),
+                          )
+                        : Container()),
                     // Container(
                     //   width: double.infinity,
                     //   margin: EdgeInsets.only(top: 10),
