@@ -4,7 +4,8 @@ import 'package:provider/provider.dart';
 import '../models/model.dart';
 import '../services/database.dart';
 import './settings.dart';
-import './usage.dart';
+// import './usagedata.dart';
+import './usageNative.dart';
 import 'dart:io';
 
 class HomeScreen extends StatefulWidget {
@@ -67,7 +68,7 @@ class _HomescreenState extends State<HomeScreen> {
                       ],
                     ),
                     Text(
-                      "You can report your estimates of smartphone usage for each family member from here and view comparisons at the end of the study.",
+                      "You can report your estimates of smartphone usage for each family member, give daily logs and view comparisons at the end of the study.",
                       style: TextStyle(
                         fontSize: height / 35,
                       ),
@@ -83,30 +84,29 @@ class _HomescreenState extends State<HomeScreen> {
                             ),
                           )
                         : Container()),
-                    // Container(
-                    //   width: double.infinity,
-                    //   margin: EdgeInsets.only(top: 10),
-                    //   child: TextButton.icon(
-                    //     style: ButtonStyle(alignment: Alignment.centerLeft),
-                    //     onPressed: () {
-                    //       Navigator.of(context).push(
-                    //         MaterialPageRoute(
-                    //           builder: (context) => UsageData(),
-                    //         ),
-                    //       );
-                    //     },
-                    //     icon: Icon(
-                    //       Icons.share,
-                    //       color: Theme.of(context).primaryColor,
-                    //     ),
-                    //     label: Text(
-                    //       "Show usage data",
-                    //       style: TextStyle(
-                    //           color: Theme.of(context).primaryColor,
-                    //           fontSize: height / 37),
-                    //     ),
-                    //   ),
-                    // ),
+                    Container(
+                      width: double.infinity,
+                      margin: EdgeInsets.only(top: 10),
+                      child: TextButton.icon(
+                        style: ButtonStyle(alignment: Alignment.centerLeft),
+                        onPressed: () {
+                          Navigator.of(context).push(
+                            MaterialPageRoute(
+                                builder: (context) => UsageNative()),
+                          );
+                        },
+                        icon: Icon(
+                          Icons.share,
+                          color: Theme.of(context).primaryColor,
+                        ),
+                        label: Text(
+                          "Show usage data",
+                          style: TextStyle(
+                              color: Theme.of(context).primaryColor,
+                              fontSize: height / 37),
+                        ),
+                      ),
+                    ),
                   ],
                 ),
               ),
