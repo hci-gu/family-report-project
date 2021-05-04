@@ -65,7 +65,7 @@ class _SurveyPickupState extends State<SurveyPickup> {
                 value: _currentSliderValue,
                 min: 0,
                 max: 400,
-                divisions: 400,
+                divisions: 80,
                 activeColor: Theme.of(context).primaryColor,
                 label: _currentSliderValue.round().toString(),
                 onChanged: (double value) {
