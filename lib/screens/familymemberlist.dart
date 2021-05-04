@@ -7,6 +7,8 @@ import './experiencejar/experienceself.dart';
 import './pendingResponses.dart';
 import './../services/database.dart';
 import './screentimeupload.dart';
+import './../helpers/notificationhelpers.dart';
+import '../main.dart';
 import 'dart:io';
 
 class FamilyMemberList extends StatefulWidget {
@@ -22,7 +24,7 @@ class FamilyMemberList extends StatefulWidget {
 
 class _FamilyMemberListState extends State<FamilyMemberList> {
   bool isLoggingScheduleInitialised;
-  bool isAllSurveysFilled = false; // set default  to true
+  bool isAllSurveysFilled;
 
   var experienceLogSchedule = Map<String, bool>();
   int experienceDaysLogged;
@@ -36,24 +38,27 @@ class _FamilyMemberListState extends State<FamilyMemberList> {
     final familyMemberList = Provider.of<List<FamilyMember>>(context) ?? [];
     var currentLoggedFamilyMember;
 
-    //chnge isAllSurveyFilled to false if even one of the surveys are not filled
+    //change isAllSurveyFilled to false if even one of the surveys are not filled
     for (var familyMember in familyMemberList) {
       if (familyMember.id == widget.currentLoggedInUserUid) {
         experienceDaysLogged = familyMember.noOfXPDaysLogged;
         currentLoggedFamilyMember = familyMember;
-        if (isAllSurveysFilled == true &&
-            isLoggingScheduleInitialised == true) {
+
+        isAllSurveysFilled = familyMember.isSurveyFilled.values.every(
+            (element) =>
+                element == true); //update isAllSurveysFilled from firebase data
+
+        if (isAllSurveysFilled == false) {
+          isLoggingScheduleInitialised = false;
+        } else {
+          isLoggingScheduleInitialised = true;
           experienceLogSchedule = familyMember
               .experienceLogSchedule; //update the log schedule from firebase
         }
-        isAllSurveysFilled = familyMember.isSurveyFilled.values
-            .every((element) => element == true);
-        if (isAllSurveysFilled == false) {
-          isLoggingScheduleInitialised = false;
-        }
       }
     }
-
+    // print(
+    //     "log is $isLoggingScheduleInitialised and survey is $isAllSurveysFilled");
     if (isAllSurveysFilled == true && isLoggingScheduleInitialised == false) {
       //initialise logging schedule once all surveys are filled
       for (int k = 0; k < 14; k++) {
@@ -77,6 +82,13 @@ class _FamilyMemberListState extends State<FamilyMemberList> {
                   child: Column(
                     //experience jar section
                     children: [
+                      RegularGreenButton("push notifications", () {
+                        scheduleNotification(
+                            flutterLocalNotificationsPlugin,
+                            DateTime.now().toString(),
+                            "A scheduled Notification",
+                            DateTime.now());
+                      }),
                       (Platform.isIOS == true)
                           ? Container(
                               width: double.infinity,
@@ -190,7 +202,7 @@ class _FamilyMemberListState extends State<FamilyMemberList> {
                       margin:
                           EdgeInsets.fromLTRB(width / 30, 30, width / 30, 15),
                       child: Text(
-                        "Members",
+                        "Family Members",
                         style: TextStyle(
                             fontSize: height / 25, fontWeight: FontWeight.bold),
                       ),
