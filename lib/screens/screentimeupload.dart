@@ -143,7 +143,7 @@ class _ScreenTimeUploadState extends State<ScreenTimeUpload> {
               width: double.infinity,
               margin: EdgeInsets.only(top: 10),
               child: Text(
-                  "Now open control center, click on the dot with a circle icon to start recording. While the recording is going on, click on each day's bar to view the screentime"),
+                  "Swipe down from top right to open Control Center and click on the dot with a circle icon to start recording. While the recording is going on, click on each day's bar to view the screentime"),
             ),
             Container(
               margin: EdgeInsets.only(top: 10),
