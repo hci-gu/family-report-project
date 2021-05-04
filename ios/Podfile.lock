@@ -321,6 +321,8 @@ PODS:
     - FirebaseCore (~> 7.0)
     - GTMSessionFetcher/Core (~> 1.4)
   - Flutter (1.0.0)
+  - flutter_local_notifications (0.0.1):
+    - Flutter
   - GoogleAppMeasurement (7.3.0):
     - GoogleUtilities/AppDelegateSwizzler (~> 7.0)
     - GoogleUtilities/MethodSwizzler (~> 7.0)
@@ -398,6 +400,7 @@ DEPENDENCIES:
   - firebase_messaging (from `.symlinks/plugins/firebase_messaging/ios`)
   - firebase_storage (from `.symlinks/plugins/firebase_storage/ios`)
   - Flutter (from `Flutter`)
+  - flutter_local_notifications (from `.symlinks/plugins/flutter_local_notifications/ios`)
   - image_picker (from `.symlinks/plugins/image_picker/ios`)
   - shared_preferences (from `.symlinks/plugins/shared_preferences/ios`)
 
@@ -443,6 +446,8 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/firebase_storage/ios"
   Flutter:
     :path: Flutter
+  flutter_local_notifications:
+    :path: ".symlinks/plugins/flutter_local_notifications/ios"
   image_picker:
     :path: ".symlinks/plugins/image_picker/ios"
   shared_preferences:
@@ -470,6 +475,7 @@ SPEC CHECKSUMS:
   FirebaseMessaging: 68d1bcb14880189558a8ae57167abe0b7e417232
   FirebaseStorage: 5002b1895bfe74a5ce92ad54f966e6162d0da2e5
   Flutter: 434fef37c0980e73bb6479ef766c45957d4b510c
+  flutter_local_notifications: 0c0b1ae97e741e1521e4c1629a459d04b9aec743
   GoogleAppMeasurement: 8d3c0aeede16ab7764144b5a4ca8e1d4323841b7
   GoogleDataTransport: 116c84c4bdeb76be2a7a46de51244368f9794eab
   GoogleUtilities: abda45f519bc4073aa1171d2f8742108def46017
