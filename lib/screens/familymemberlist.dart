@@ -10,6 +10,7 @@ import './screentimeupload.dart';
 import './../helpers/notificationhelpers.dart';
 import '../main.dart';
 import 'dart:io';
+import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 
 class FamilyMemberList extends StatefulWidget {
   final String familyId;
@@ -69,8 +70,6 @@ class _FamilyMemberListState extends State<FamilyMemberList> {
           .updateExperienceLogSchedule(experienceLogSchedule);
       isLoggingScheduleInitialised = true;
     }
-
-    // print(experienceLogSchedule[currentDate.toString()]);
     return Container(
       child: familyMemberList.isEmpty
           ? Center(
@@ -82,13 +81,37 @@ class _FamilyMemberListState extends State<FamilyMemberList> {
                   child: Column(
                     //experience jar section
                     children: [
-                      RegularGreenButton("push notifications", () {
-                        scheduleNotification(
-                            flutterLocalNotificationsPlugin,
-                            DateTime.now().toString(),
-                            "A scheduled Notification",
-                            DateTime.now());
-                      }),
+                      Container(
+                        width: double.infinity,
+                        margin: EdgeInsets.only(bottom: 10),
+                        child: TextButton.icon(
+                          style: ButtonStyle(alignment: Alignment.centerLeft),
+                          onPressed: () {
+                            DatePicker.showTime12hPicker(context,
+                                showTitleActions: true, onChanged: (date) {
+                              print('change $date');
+                            }, onConfirm: (date) {
+                              print('confirm $date');
+                            },
+                                currentTime: DateTime.now(),
+                                locale: LocaleType.en);
+                          },
+                          icon: Icon(
+                            Icons.alarm,
+                            color: Theme.of(context).primaryColor,
+                          ),
+                          label: Text(
+                            "Set Daily Log Reminder",
+                            style: TextStyle(
+                                color: Theme.of(context).primaryColor,
+                                fontSize: height / 37),
+                          ),
+                        ),
+                      ),
+                      // RegularGreenButton("push notifications", () {
+                      //   scheduleNotification(
+                      //       flutterLocalNotificationsPlugin, '0');
+                      // }),
                       (Platform.isIOS == true)
                           ? Container(
                               width: double.infinity,
