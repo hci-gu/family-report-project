@@ -2,7 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import './../models/remindernotification.dart';
 import './../models/reminders.dart';
+import 'package:timezone/data/latest.dart' as tz;
+import 'package:timezone/timezone.dart' as tz;
 import 'package:rxdart/subjects.dart';
+import 'package:flutter_native_timezone/flutter_native_timezone.dart';
 
 final BehaviorSubject<ReminderNotification> didReceiveLocalNotificationSubject =
     BehaviorSubject<ReminderNotification>();
@@ -12,6 +15,9 @@ final BehaviorSubject<String> selectNotificationSubject =
 
 Future<void> initNotifications(
     FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin) async {
+  tz.initializeTimeZones();
+  String currentTimeZone = await FlutterNativeTimezone.getLocalTimezone();
+  tz.setLocalLocation(tz.getLocation(currentTimeZone));
   var initializationSettingsAndroid = AndroidInitializationSettings('app_icon');
   var initializationSettingsIOS = IOSInitializationSettings(
       requestAlertPermission: false,
@@ -59,10 +65,9 @@ Future<void> turnOffNotificationById(
 }
 
 Future<void> scheduleNotification(
-    FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin,
-    String id,
-    String body,
-    DateTime scheduledNotificationDateTime) async {
+  FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin,
+  String id,
+) async {
   var androidPlatformChannelSpecifics = AndroidNotificationDetails(
     id,
     'Reminder notifications',
@@ -73,13 +78,20 @@ Future<void> scheduleNotification(
   var platformChannelSpecifics = NotificationDetails(
       android: androidPlatformChannelSpecifics,
       iOS: iOSPlatformChannelSpecifics);
-  await flutterLocalNotificationsPlugin.schedule(0, 'Reminder', body,
-      scheduledNotificationDateTime, platformChannelSpecifics);
-  // await flutterLocalNotificationsPlugin.zonedSchedule(0, 'Reminder', body,
-  //     scheduledNotificationDateTime, platformChannelSpecifics,
-  //     uiLocalNotificationDateInterpretation:
-  //         UILocalNotificationDateInterpretation.absoluteTime,
-  //     androidAllowWhileIdle: true);
+  tz.initializeTimeZones();
+  String currentTimeZone = await FlutterNativeTimezone.getLocalTimezone();
+  tz.setLocalLocation(tz.getLocation(currentTimeZone));
+  await flutterLocalNotificationsPlugin.zonedSchedule(
+      0,
+      'scheduled title',
+      'scheduled body',
+      tz.TZDateTime.now(tz.local).add(const Duration(seconds: 5)),
+      const NotificationDetails(
+          android: AndroidNotificationDetails('your channel id',
+              'your channel name', 'your channel description')),
+      androidAllowWhileIdle: true,
+      uiLocalNotificationDateInterpretation:
+          UILocalNotificationDateInterpretation.absoluteTime);
 }
 
 Future<void> scheduleNotificationPeriodically(
@@ -98,7 +110,51 @@ Future<void> scheduleNotificationPeriodically(
       android: androidPlatformChannelSpecifics,
       iOS: iOSPlatformChannelSpecifics);
   await flutterLocalNotificationsPlugin.periodicallyShow(
-      0, 'Reminder', body, interval, platformChannelSpecifics);
+      0, 'Daily Log Reminder', body, interval, platformChannelSpecifics);
+}
+
+Future<tz.TZDateTime> _nextInstanceOfReminder(DateTime date) async {
+  tz.initializeTimeZones();
+  String currentTimeZone = await FlutterNativeTimezone.getLocalTimezone();
+  tz.setLocalLocation(tz.getLocation(currentTimeZone));
+  final tz.TZDateTime now = tz.TZDateTime.now(tz.local);
+  final toBeScheduledTime = tz.TZDateTime.from(date, tz.local);
+  print(toBeScheduledTime);
+  tz.TZDateTime scheduledDate = tz.TZDateTime(
+      tz.local,
+      toBeScheduledTime.year,
+      toBeScheduledTime.month,
+      toBeScheduledTime.day,
+      toBeScheduledTime.hour,
+      toBeScheduledTime.minute);
+  if (scheduledDate.isBefore(now)) {
+    scheduledDate = scheduledDate.add(const Duration(days: 1));
+  }
+  return scheduledDate;
+}
+
+Future<void> scheduleDailyNotification(
+    FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin,
+    String id,
+    String body,
+    DateTime date) async {
+  _nextInstanceOfReminder(date).then((value) async {
+    await flutterLocalNotificationsPlugin.zonedSchedule(
+        0,
+        'Daily Log Reminder',
+        'Hey! It is time for logging your daily observations on the app.',
+        value,
+        const NotificationDetails(
+          android: AndroidNotificationDetails(
+              'daily notification channel id',
+              'daily notification channel name',
+              'daily notification description'),
+        ),
+        androidAllowWhileIdle: true,
+        uiLocalNotificationDateInterpretation:
+            UILocalNotificationDateInterpretation.absoluteTime,
+        matchDateTimeComponents: DateTimeComponents.time);
+  });
 }
 
 void requestIOSPermissions(

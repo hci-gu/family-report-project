@@ -1,3 +1,4 @@
+import 'package:family_report_project/screens/regulargreenbutton.dart';
 import './familymemberlist.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -6,6 +7,8 @@ import '../services/database.dart';
 import './settings.dart';
 // import './usagedata.dart';
 import './usageNative.dart';
+import './../helpers/notificationhelpers.dart';
+import './../main.dart';
 import 'dart:io';
 
 class HomeScreen extends StatefulWidget {
@@ -84,29 +87,34 @@ class _HomescreenState extends State<HomeScreen> {
                             ),
                           )
                         : Container()),
-                    Container(
-                      width: double.infinity,
-                      margin: EdgeInsets.only(top: 10),
-                      child: TextButton.icon(
-                        style: ButtonStyle(alignment: Alignment.centerLeft),
-                        onPressed: () {
-                          Navigator.of(context).push(
-                            MaterialPageRoute(
-                                builder: (context) => UsageNative()),
-                          );
-                        },
-                        icon: Icon(
-                          Icons.share,
-                          color: Theme.of(context).primaryColor,
-                        ),
-                        label: Text(
-                          "Show usage data",
-                          style: TextStyle(
-                              color: Theme.of(context).primaryColor,
-                              fontSize: height / 37),
-                        ),
-                      ),
-                    ),
+                    // Container(
+                    //   width: double.infinity,
+                    //   margin: EdgeInsets.only(top: 10),
+                    //   child: TextButton.icon(
+                    //     style: ButtonStyle(alignment: Alignment.centerLeft),
+                    //     onPressed: () {
+                    //       Navigator.of(context).push(
+                    //         MaterialPageRoute(
+                    //             builder: (context) => UsageNative()),
+                    //       );
+                    //     },
+                    //     icon: Icon(
+                    //       Icons.share,
+                    //       color: Theme.of(context).primaryColor,
+                    //     ),
+                    //     label: Text(
+                    //       "Show usage data",
+                    //       style: TextStyle(
+                    //           color: Theme.of(context).primaryColor,
+                    //           fontSize: height / 37),
+                    //     ),
+                    //   ),
+                    // ),
+                    // Container(
+                    //   child: RegularGreenButton("show notification", () {
+                    //     showNotification(flutterLocalNotificationsPlugin);
+                    //   }),
+                    // )
                   ],
                 ),
               ),
