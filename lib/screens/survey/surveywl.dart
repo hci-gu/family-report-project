@@ -96,15 +96,15 @@ class _SurveyWLState extends State<SurveyWL> {
                       .updateFamilyMemberSurveyResponses(
                           widget.tempSurvey, widget.familyMember.id);
 
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => HomeScreen(
-                        familyId: widget.familyId,
-                        loggedInUserUid: widget.currentLoggedInUserUid,
+                  Navigator.pushAndRemoveUntil(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => HomeScreen(
+                          familyId: widget.familyId,
+                          loggedInUserUid: widget.currentLoggedInUserUid,
+                        ),
                       ),
-                    ),
-                  );
+                      (Route<dynamic> route) => false);
                 },
               ),
             ),
