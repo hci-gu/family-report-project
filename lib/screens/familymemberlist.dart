@@ -11,6 +11,7 @@ import './../helpers/notificationhelpers.dart';
 import '../main.dart';
 import 'dart:io';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
+import './screentimeuploadandroid.dart';
 
 class FamilyMemberList extends StatefulWidget {
   final String familyId;
@@ -88,10 +89,13 @@ class _FamilyMemberListState extends State<FamilyMemberList> {
                           style: ButtonStyle(alignment: Alignment.centerLeft),
                           onPressed: () {
                             DatePicker.showTime12hPicker(context,
-                                showTitleActions: true, onChanged: (date) {
-                              print('change $date');
-                            }, onConfirm: (date) {
+                                showTitleActions: true, onConfirm: (date) {
                               print('confirm $date');
+                              scheduleDailyNotification(
+                                  flutterLocalNotificationsPlugin,
+                                  '0',
+                                  "Log your daily Obervations!",
+                                  date);
                             },
                                 currentTime: DateTime.now(),
                                 locale: LocaleType.en);
@@ -108,37 +112,35 @@ class _FamilyMemberListState extends State<FamilyMemberList> {
                           ),
                         ),
                       ),
-                      // RegularGreenButton("push notifications", () {
-                      //   scheduleNotification(
-                      //       flutterLocalNotificationsPlugin, '0');
-                      // }),
-                      (Platform.isIOS == true)
-                          ? Container(
-                              width: double.infinity,
-                              margin: EdgeInsets.only(bottom: 10),
-                              child: TextButton.icon(
-                                style: ButtonStyle(
-                                    alignment: Alignment.centerLeft),
-                                onPressed: () {
-                                  Navigator.of(context).push(
-                                    MaterialPageRoute(
+                      Container(
+                        width: double.infinity,
+                        margin: EdgeInsets.only(bottom: 10),
+                        child: TextButton.icon(
+                          style: ButtonStyle(alignment: Alignment.centerLeft),
+                          onPressed: () {
+                            Navigator.of(context).push(
+                              (Platform.isIOS == true)
+                                  ? MaterialPageRoute(
                                       builder: (context) => ScreenTimeUpload(),
+                                    )
+                                  : MaterialPageRoute(
+                                      builder: (context) =>
+                                          ScreenTimeUploadAndroid(),
                                     ),
-                                  );
-                                },
-                                icon: Icon(
-                                  Icons.upload_file,
-                                  color: Theme.of(context).primaryColor,
-                                ),
-                                label: Text(
-                                  "Upload screentime data",
-                                  style: TextStyle(
-                                      color: Theme.of(context).primaryColor,
-                                      fontSize: height / 37),
-                                ),
-                              ),
-                            )
-                          : Container(),
+                            );
+                          },
+                          icon: Icon(
+                            Icons.upload_file,
+                            color: Theme.of(context).primaryColor,
+                          ),
+                          label: Text(
+                            "Upload screentime data",
+                            style: TextStyle(
+                                color: Theme.of(context).primaryColor,
+                                fontSize: height / 37),
+                          ),
+                        ),
+                      ),
                       Container(
                         width: double.infinity,
                         margin: EdgeInsets.only(bottom: 15),
