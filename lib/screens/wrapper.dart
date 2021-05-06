@@ -25,6 +25,8 @@ class Wrapper extends StatelessWidget {
             default:
               if (snapshot.hasError) {
                 return Text('Error: ${snapshot.error}');
+              } else if (snapshot == null) {
+                return const CircularProgressIndicator();
               } else {
                 return FutureBuilder<String>(
                   future: SharedPreferencesHelper.getFamilyMemberUid(),
@@ -36,11 +38,14 @@ class Wrapper extends StatelessWidget {
                       default:
                         if (snapshot2.hasError) {
                           return Text('Error: ${snapshot2.error}');
+                        } else if (snapshot2 == null) {
+                          return const CircularProgressIndicator();
                         } else {
                           return StreamProvider<FamilyMember>.value(
                             value:
                                 DatabaseService(snapshot.data).familyMemberData,
-                            initialData: null,
+                            initialData:
+                                FamilyMember(name: "", id: "", relation: ""),
                             child: HomeScreen(
                               familyId: snapshot.data,
                               loggedInUserUid: snapshot2.data,
