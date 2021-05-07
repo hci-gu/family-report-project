@@ -1,14 +1,9 @@
-import 'package:family_report_project/screens/regulargreenbutton.dart';
 import './familymemberlist.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../models/model.dart';
 import '../services/database.dart';
 import './settings.dart';
-// import './usagedata.dart';
-import './usageNative.dart';
-import './../helpers/notificationhelpers.dart';
-import './../main.dart';
 import 'dart:io';
 
 class HomeScreen extends StatefulWidget {

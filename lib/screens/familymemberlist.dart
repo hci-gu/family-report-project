@@ -71,6 +71,10 @@ class _FamilyMemberListState extends State<FamilyMemberList> {
           .updateExperienceLogSchedule(experienceLogSchedule);
       isLoggingScheduleInitialised = true;
     }
+    if (experienceDaysLogged == 14) {
+      flutterLocalNotificationsPlugin.cancelAll();
+    }
+
     return Container(
       child: familyMemberList.isEmpty
           ? Center(

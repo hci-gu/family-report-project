@@ -1,11 +1,13 @@
+import 'package:family_report_project/main.dart';
+import 'package:family_report_project/screens/homescreen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import './../models/remindernotification.dart';
-import './../models/reminders.dart';
 import 'package:timezone/data/latest.dart' as tz;
 import 'package:timezone/timezone.dart' as tz;
 import 'package:rxdart/subjects.dart';
 import 'package:flutter_native_timezone/flutter_native_timezone.dart';
+import '../helpers/sharedpreferenceshelper.dart';
 
 final BehaviorSubject<ReminderNotification> didReceiveLocalNotificationSubject =
     BehaviorSubject<ReminderNotification>();
@@ -30,12 +32,30 @@ Future<void> initNotifications(
       });
   var initializationSettings = InitializationSettings(
       android: initializationSettingsAndroid, iOS: initializationSettingsIOS);
+
   await flutterLocalNotificationsPlugin.initialize(initializationSettings,
       onSelectNotification: (String payload) async {
     if (payload != null) {
       debugPrint('notification payload: ' + payload);
     }
-    selectNotificationSubject.add(payload);
+
+    var familyId = await SharedPreferencesHelper.getFamilyCollectionName();
+    var currentUid = await SharedPreferencesHelper.getFamilyMemberUid();
+
+    try {
+      await MyApp.navigationKey.currentState.push(
+        MaterialPageRoute(
+          builder: (context) => HomeScreen(
+            familyId: familyId,
+            loggedInUserUid: currentUid,
+          ),
+        ),
+      );
+    } catch (e) {
+      print(e.toString());
+    }
+
+    // selectNotificationSubject.add(payload);
   });
 }
 
