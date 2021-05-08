@@ -7,7 +7,11 @@ import './experiencejar/experienceself.dart';
 import './pendingResponses.dart';
 import './../services/database.dart';
 import './screentimeupload.dart';
+import './../helpers/notificationhelpers.dart';
+import '../main.dart';
 import 'dart:io';
+import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
+import './screentimeuploadandroid.dart';
 
 class FamilyMemberList extends StatefulWidget {
   final String familyId;
@@ -22,7 +26,7 @@ class FamilyMemberList extends StatefulWidget {
 
 class _FamilyMemberListState extends State<FamilyMemberList> {
   bool isLoggingScheduleInitialised;
-  bool isAllSurveysFilled = false; // set default  to true
+  bool isAllSurveysFilled;
 
   var experienceLogSchedule = Map<String, bool>();
   int experienceDaysLogged;
@@ -36,24 +40,27 @@ class _FamilyMemberListState extends State<FamilyMemberList> {
     final familyMemberList = Provider.of<List<FamilyMember>>(context) ?? [];
     var currentLoggedFamilyMember;
 
-    //chnge isAllSurveyFilled to false if even one of the surveys are not filled
+    //change isAllSurveyFilled to false if even one of the surveys are not filled
     for (var familyMember in familyMemberList) {
       if (familyMember.id == widget.currentLoggedInUserUid) {
         experienceDaysLogged = familyMember.noOfXPDaysLogged;
         currentLoggedFamilyMember = familyMember;
-        if (isAllSurveysFilled == true &&
-            isLoggingScheduleInitialised == true) {
+
+        isAllSurveysFilled = familyMember.isSurveyFilled.values.every(
+            (element) =>
+                element == true); //update isAllSurveysFilled from firebase data
+
+        if (isAllSurveysFilled == false) {
+          isLoggingScheduleInitialised = false;
+        } else {
+          isLoggingScheduleInitialised = true;
           experienceLogSchedule = familyMember
               .experienceLogSchedule; //update the log schedule from firebase
         }
-        isAllSurveysFilled = familyMember.isSurveyFilled.values
-            .every((element) => element == true);
-        if (isAllSurveysFilled == false) {
-          isLoggingScheduleInitialised = false;
-        }
       }
     }
-
+    // print(
+    //     "log is $isLoggingScheduleInitialised and survey is $isAllSurveysFilled");
     if (isAllSurveysFilled == true && isLoggingScheduleInitialised == false) {
       //initialise logging schedule once all surveys are filled
       for (int k = 0; k < 14; k++) {
@@ -64,8 +71,10 @@ class _FamilyMemberListState extends State<FamilyMemberList> {
           .updateExperienceLogSchedule(experienceLogSchedule);
       isLoggingScheduleInitialised = true;
     }
+    if (experienceDaysLogged == 14) {
+      flutterLocalNotificationsPlugin.cancelAll();
+    }
 
-    // print(experienceLogSchedule[currentDate.toString()]);
     return Container(
       child: familyMemberList.isEmpty
           ? Center(
@@ -77,33 +86,65 @@ class _FamilyMemberListState extends State<FamilyMemberList> {
                   child: Column(
                     //experience jar section
                     children: [
-                      (Platform.isIOS == true)
-                          ? Container(
-                              width: double.infinity,
-                              margin: EdgeInsets.only(bottom: 10),
-                              child: TextButton.icon(
-                                style: ButtonStyle(
-                                    alignment: Alignment.centerLeft),
-                                onPressed: () {
-                                  Navigator.of(context).push(
-                                    MaterialPageRoute(
+                      Container(
+                        width: double.infinity,
+                        margin: EdgeInsets.only(bottom: 10),
+                        child: TextButton.icon(
+                          style: ButtonStyle(alignment: Alignment.centerLeft),
+                          onPressed: () {
+                            DatePicker.showTime12hPicker(context,
+                                showTitleActions: true, onConfirm: (date) {
+                              print('confirm $date');
+                              scheduleDailyNotification(
+                                  flutterLocalNotificationsPlugin,
+                                  '0',
+                                  "Log your daily Obervations!",
+                                  date);
+                            },
+                                currentTime: DateTime.now(),
+                                locale: LocaleType.en);
+                          },
+                          icon: Icon(
+                            Icons.alarm,
+                            color: Theme.of(context).primaryColor,
+                          ),
+                          label: Text(
+                            "Set Daily Log Reminder",
+                            style: TextStyle(
+                                color: Theme.of(context).primaryColor,
+                                fontSize: height / 37),
+                          ),
+                        ),
+                      ),
+                      Container(
+                        width: double.infinity,
+                        margin: EdgeInsets.only(bottom: 10),
+                        child: TextButton.icon(
+                          style: ButtonStyle(alignment: Alignment.centerLeft),
+                          onPressed: () {
+                            Navigator.of(context).push(
+                              (Platform.isIOS == true)
+                                  ? MaterialPageRoute(
                                       builder: (context) => ScreenTimeUpload(),
+                                    )
+                                  : MaterialPageRoute(
+                                      builder: (context) =>
+                                          ScreenTimeUploadAndroid(),
                                     ),
-                                  );
-                                },
-                                icon: Icon(
-                                  Icons.upload_file,
-                                  color: Theme.of(context).primaryColor,
-                                ),
-                                label: Text(
-                                  "Upload screentime data",
-                                  style: TextStyle(
-                                      color: Theme.of(context).primaryColor,
-                                      fontSize: height / 37),
-                                ),
-                              ),
-                            )
-                          : Container(),
+                            );
+                          },
+                          icon: Icon(
+                            Icons.upload_file,
+                            color: Theme.of(context).primaryColor,
+                          ),
+                          label: Text(
+                            "Upload screentime data",
+                            style: TextStyle(
+                                color: Theme.of(context).primaryColor,
+                                fontSize: height / 37),
+                          ),
+                        ),
+                      ),
                       Container(
                         width: double.infinity,
                         margin: EdgeInsets.only(bottom: 15),
@@ -190,7 +231,7 @@ class _FamilyMemberListState extends State<FamilyMemberList> {
                       margin:
                           EdgeInsets.fromLTRB(width / 30, 30, width / 30, 15),
                       child: Text(
-                        "Members",
+                        "Family Members",
                         style: TextStyle(
                             fontSize: height / 25, fontWeight: FontWeight.bold),
                       ),

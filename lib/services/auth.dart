@@ -2,7 +2,7 @@ import 'package:family_report_project/models/model.dart';
 import 'package:family_report_project/services/database.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import '../helpers/sharedpreferenceshelper.dart';
-import './../screens/usage.dart';
+// import './../screens/usage.dart';
 import 'dart:io';
 
 class AuthService {
@@ -44,7 +44,7 @@ class AuthService {
 
       //collect usage data and send it to firebase
       if (Platform.isAndroid == true) {
-        UsageData();
+        // UsageData();
       }
       return _familyMemberFromFirebaseUser(result.user);
     } catch (e) {

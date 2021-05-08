@@ -127,12 +127,14 @@ class FamilyMemberWidget extends StatelessWidget {
           ),
         ),
         onPressed: () {
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-                builder: (context) =>
-                    SurveyForm(familyMember, familyId, currentLoggedInUserUid)),
-          );
+          (currentLoggedFamilyMember.isSurveyFilled[familyMember.id] == false)
+              ? Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => SurveyForm(
+                          familyMember, familyId, currentLoggedInUserUid)),
+                )
+              : {};
         },
       ),
     );

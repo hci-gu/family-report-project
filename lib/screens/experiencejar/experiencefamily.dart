@@ -94,15 +94,14 @@ class _ExperienceFamilyState extends State<ExperienceFamily> {
                       .updateFamilyMemberXPLoggingResponses(
                           widget.tempLogging, widget.experienceLogSchedule);
 
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => HomeScreen(
-                        familyId: widget.familyId,
-                        loggedInUserUid: widget.currentLoggedInUserUid,
-                      ),
-                    ),
-                  );
+                  Navigator.pushAndRemoveUntil(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => HomeScreen(
+                                familyId: widget.familyId,
+                                loggedInUserUid: widget.currentLoggedInUserUid,
+                              )),
+                      (Route<dynamic> route) => false);
                 }),
               ],
             ),

@@ -19,7 +19,7 @@ class _RegisterState extends State<Register> {
   String password = "";
   String familyId = "";
   String age = "";
-  String gender = "Male";
+  String gender = "Female";
   String relation = 'Mother';
   String error = "";
 

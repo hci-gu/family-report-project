@@ -3,9 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../models/model.dart';
 import '../services/database.dart';
-
 import './settings.dart';
-import './usage.dart';
+import 'dart:io';
 
 class HomeScreen extends StatefulWidget {
   final String familyId;
@@ -67,11 +66,22 @@ class _HomescreenState extends State<HomeScreen> {
                       ],
                     ),
                     Text(
-                      "You can report your estimates of smartphone usage for each family member from here and view comparisons at the end of the study.",
+                      "You can report your estimates of smartphone usage for each family member, give daily logs and view comparisons at the end of the study.",
                       style: TextStyle(
                         fontSize: height / 35,
                       ),
                     ),
+                    ((Platform.isIOS == true)
+                        ? Container(
+                            margin: EdgeInsets.only(top: 15),
+                            child: Text(
+                              "iOS Users - If you have the screentime feature turned off, turn it on now. You can find it in Settings -> Screentime. Others, ignore this.",
+                              style: TextStyle(
+                                  fontSize: height / 40,
+                                  fontWeight: FontWeight.bold),
+                            ),
+                          )
+                        : Container()),
                     // Container(
                     //   width: double.infinity,
                     //   margin: EdgeInsets.only(top: 10),
@@ -80,8 +90,7 @@ class _HomescreenState extends State<HomeScreen> {
                     //     onPressed: () {
                     //       Navigator.of(context).push(
                     //         MaterialPageRoute(
-                    //           builder: (context) => UsageData(),
-                    //         ),
+                    //             builder: (context) => UsageNative()),
                     //       );
                     //     },
                     //     icon: Icon(
@@ -96,6 +105,11 @@ class _HomescreenState extends State<HomeScreen> {
                     //     ),
                     //   ),
                     // ),
+                    // Container(
+                    //   child: RegularGreenButton("show notification", () {
+                    //     showNotification(flutterLocalNotificationsPlugin);
+                    //   }),
+                    // )
                   ],
                 ),
               ),
