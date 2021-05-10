@@ -25,7 +25,6 @@ class FamilyMemberList extends StatefulWidget {
 }
 
 class _FamilyMemberListState extends State<FamilyMemberList> {
-  bool isLoggingScheduleInitialised;
   bool isAllSurveysFilled;
 
   var experienceLogSchedule = Map<String, bool>();
@@ -38,7 +37,7 @@ class _FamilyMemberListState extends State<FamilyMemberList> {
     double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;
     final familyMemberList = Provider.of<List<FamilyMember>>(context) ?? [];
-    var currentLoggedFamilyMember;
+    FamilyMember currentLoggedFamilyMember;
 
     //change isAllSurveyFilled to false if even one of the surveys are not filled
     for (var familyMember in familyMemberList) {
@@ -49,28 +48,25 @@ class _FamilyMemberListState extends State<FamilyMemberList> {
         isAllSurveysFilled = familyMember.isSurveyFilled.values.every(
             (element) =>
                 element == true); //update isAllSurveysFilled from firebase data
-
-        if (isAllSurveysFilled == false) {
-          isLoggingScheduleInitialised = false;
-        } else {
-          isLoggingScheduleInitialised = true;
-          experienceLogSchedule = familyMember
-              .experienceLogSchedule; //update the log schedule from firebase
+        if (isAllSurveysFilled == true &&
+            currentLoggedFamilyMember.experienceLogSchedule.isEmpty) {
+          //initialise logging schedule once all surveys are filled
+          for (int k = 0; k < 14; k++) {
+            experienceLogSchedule[
+                currentDate.add(Duration(days: k)).toString()] = false;
+          }
+          DatabaseService(widget.familyId, uid: widget.currentLoggedInUserUid)
+              .updateExperienceLogSchedule(experienceLogSchedule);
         }
+        experienceLogSchedule = currentLoggedFamilyMember
+            .experienceLogSchedule; //update the log schedule from firebase
       }
     }
-    // print(
-    //     "log is $isLoggingScheduleInitialised and survey is $isAllSurveysFilled");
-    if (isAllSurveysFilled == true && isLoggingScheduleInitialised == false) {
-      //initialise logging schedule once all surveys are filled
-      for (int k = 0; k < 14; k++) {
-        experienceLogSchedule[currentDate.add(Duration(days: k)).toString()] =
-            false;
-      }
-      DatabaseService(widget.familyId, uid: widget.currentLoggedInUserUid)
-          .updateExperienceLogSchedule(experienceLogSchedule);
-      isLoggingScheduleInitialised = true;
-    }
+
+    print("survey is $isAllSurveysFilled");
+    print(
+        "${experienceLogSchedule[currentDate.toString()]} and ${currentDate.toString()}");
+
     if (experienceDaysLogged == 14) {
       flutterLocalNotificationsPlugin.cancelAll();
     }
