@@ -39,7 +39,7 @@ class _SurveyUsageState extends State<SurveyUsage> {
             Padding(
               padding: EdgeInsets.fromLTRB(width / 30, 10, width / 30, 30),
               child: Text(
-                "For how many hours does in a day does ${widget.familyMember.name} use ${(widget.familyMember.gender == "female") ? "her" : "his"} smartphone?",
+                "How much time in a day do you think ${widget.familyMember.name} spends on ${(widget.familyMember.gender == "Female") ? "her" : "his"} smartphone?",
                 style: TextStyle(
                   fontSize: height / 30,
                 ),

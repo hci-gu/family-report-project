@@ -43,7 +43,7 @@ class _SurveyPickupState extends State<SurveyPickup> {
             Padding(
               padding: EdgeInsets.fromLTRB(width / 30, 10, width / 30, 30),
               child: Text(
-                "How many times does ${widget.familyMember.name} pick up ${(widget.familyMember.gender == "female") ? "her" : "his"} smartphone in a day?",
+                "How many times in a day do you think ${widget.familyMember.name} picks up or unlocks ${(widget.familyMember.gender == "Female") ? "her" : "his"} smartphone?",
                 style: TextStyle(
                   fontSize: height / 30,
                 ),
