@@ -9,7 +9,8 @@
     <uses-permission android:name="android.permission.INTERNET"/>
 
    <application
-        android:label="family_report_project"
+
+        android:label="family Screentime Study"
         android:icon="@mipmap/ic_launcher">
         <activity
             android:name=".MainActivity"

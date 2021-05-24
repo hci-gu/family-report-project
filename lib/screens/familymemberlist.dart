@@ -1,17 +1,17 @@
-import 'package:flutter/material.dart';
 import './../models/model.dart';
-import 'package:provider/provider.dart';
 import 'familymemberwidget.dart';
 import './regulargreenbutton.dart';
 import './experiencejar/experienceself.dart';
+import './screentimeuploadandroid.dart';
 import './pendingResponses.dart';
 import './../services/database.dart';
 import './screentimeupload.dart';
 import './../helpers/notificationhelpers.dart';
 import '../main.dart';
-import 'dart:io';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
-import './screentimeuploadandroid.dart';
+import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'dart:io';
 
 class FamilyMemberList extends StatefulWidget {
   final String familyId;
@@ -44,6 +44,7 @@ class _FamilyMemberListState extends State<FamilyMemberList> {
       if (familyMember.id == widget.currentLoggedInUserUid) {
         experienceDaysLogged = familyMember.noOfXPDaysLogged;
         currentLoggedFamilyMember = familyMember;
+        print(currentLoggedFamilyMember.id);
 
         isAllSurveysFilled = familyMember.isSurveyFilled.values.every(
             (element) =>
@@ -63,16 +64,12 @@ class _FamilyMemberListState extends State<FamilyMemberList> {
       }
     }
 
-    print("survey is $isAllSurveysFilled");
-    print(
-        "${experienceLogSchedule[currentDate.toString()]} and ${currentDate.toString()}");
-
     if (experienceDaysLogged == 14) {
       flutterLocalNotificationsPlugin.cancelAll();
     }
-
+    print(familyMemberList.length);
     return Container(
-      child: familyMemberList.isEmpty
+      child: (familyMemberList.length == null)
           ? Center(
               child: CircularProgressIndicator(),
             )
@@ -240,9 +237,9 @@ class _FamilyMemberListState extends State<FamilyMemberList> {
                         currentLoggedInUserUid: widget.currentLoggedInUserUid,
                       ),
                     ),
-                    for (var family in familyMemberList)
+                    for (var familyMember in familyMemberList)
                       FamilyMemberWidget(
-                        familyMember: family,
+                        familyMember: familyMember,
                         familyId: widget.familyId,
                         currentLoggedInUserUid: widget.currentLoggedInUserUid,
                         currentLoggedFamilyMember: currentLoggedFamilyMember,

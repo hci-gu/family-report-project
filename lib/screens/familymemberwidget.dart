@@ -18,6 +18,8 @@ class FamilyMemberWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;
+    print("${familyMember.isSurveyFilled[familyMember.id]}");
+    print("${currentLoggedFamilyMember.isSurveyFilled[familyMember.id]}");
     return Container(
       width: double.infinity,
       margin: EdgeInsets.only(left: width / 30, right: width / 30, bottom: 15),
