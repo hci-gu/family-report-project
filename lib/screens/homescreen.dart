@@ -20,7 +20,6 @@ class _HomescreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;
-
     return StreamProvider<List<FamilyMember>>.value(
       value: DatabaseService(widget.familyId).familyMemberList,
       initialData: null,
@@ -60,7 +59,9 @@ class _HomescreenState extends State<HomeScreen> {
                               MaterialPageRoute(
                                 builder: (context) => SettingsPage(),
                               ),
-                            );
+                            ).then((value) {
+                              setState(() {});
+                            });
                           },
                         ),
                       ],
@@ -82,34 +83,6 @@ class _HomescreenState extends State<HomeScreen> {
                             ),
                           )
                         : Container()),
-                    // Container(
-                    //   width: double.infinity,
-                    //   margin: EdgeInsets.only(top: 10),
-                    //   child: TextButton.icon(
-                    //     style: ButtonStyle(alignment: Alignment.centerLeft),
-                    //     onPressed: () {
-                    //       Navigator.of(context).push(
-                    //         MaterialPageRoute(
-                    //             builder: (context) => UsageNative()),
-                    //       );
-                    //     },
-                    //     icon: Icon(
-                    //       Icons.share,
-                    //       color: Theme.of(context).primaryColor,
-                    //     ),
-                    //     label: Text(
-                    //       "Show usage data",
-                    //       style: TextStyle(
-                    //           color: Theme.of(context).primaryColor,
-                    //           fontSize: height / 37),
-                    //     ),
-                    //   ),
-                    // ),
-                    // Container(
-                    //   child: RegularGreenButton("show notification", () {
-                    //     showNotification(flutterLocalNotificationsPlugin);
-                    //   }),
-                    // )
                   ],
                 ),
               ),

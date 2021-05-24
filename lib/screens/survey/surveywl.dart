@@ -47,7 +47,7 @@ class _SurveyWLState extends State<SurveyWL> {
             Padding(
               padding: EdgeInsets.fromLTRB(width / 30, 10, width / 30, 30),
               child: Text(
-                "For what purpose do you think ${widget.familyMember.name} mostly uses ${(widget.familyMember.gender == "female") ? "her" : "his"} smartphone for?",
+                "For what purpose do you think ${widget.familyMember.name} mostly uses ${(widget.familyMember.gender == "Female") ? "her" : "his"} smartphone for?",
                 style: TextStyle(
                   fontSize: height / 30,
                 ),

@@ -47,7 +47,7 @@ class _ExperienceSelfState extends State<ExperienceSelf> {
             child: Column(
               children: [
                 Text(
-                  "1. Tell us about at least one significant observation you made about your own smartphone usage",
+                  "1. Tell us about at least one significant or interesting observation you made about your own smartphone usage",
                   style: TextStyle(
                     fontSize: height / 30,
                   ),
