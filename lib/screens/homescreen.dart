@@ -37,13 +37,16 @@ class _HomescreenState extends State<HomeScreen> {
                       children: <Widget>[
                         Padding(
                           padding: EdgeInsets.only(bottom: 15),
-                          child: Text(
-                            "Hello, ${widget.familyId}!",
-                            overflow: TextOverflow.fade,
-                            style: TextStyle(
-                                color: Theme.of(context).primaryColor,
-                                fontSize: height / 20,
-                                fontWeight: FontWeight.bold),
+                          child: SizedBox(
+                            width: width * 0.75,
+                            child: Text(
+                              "Hello, ${widget.familyId}!",
+                              overflow: TextOverflow.fade,
+                              style: TextStyle(
+                                  color: Theme.of(context).primaryColor,
+                                  fontSize: height / 20,
+                                  fontWeight: FontWeight.bold),
+                            ),
                           ),
                         ),
                         Spacer(),
