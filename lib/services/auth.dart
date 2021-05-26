@@ -53,10 +53,14 @@ class AuthService {
     }
   }
 
-  Future signInWithEmailAndPassword(String email, String password) async {
+  Future signInWithEmailAndPassword(
+      String email, String password, String familyId) async {
     try {
       UserCredential result = await _auth.signInWithEmailAndPassword(
           email: email, password: password);
+
+      await SharedPreferencesHelper.setFamilyCollectionName(familyId);
+      await SharedPreferencesHelper.setFamilyMemberUid(result.user.uid);
       return _familyMemberFromFirebaseUser(result.user);
     } catch (e) {
       print(e.toString());

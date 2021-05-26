@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import './../regulargreenbutton.dart';
 import '../../services/auth.dart';
 import '../../shared/loading.dart';
+import 'package:flutter/services.dart';
 
 class Register extends StatefulWidget {
   Register({Key key}) : super(key: key);
@@ -78,6 +79,10 @@ class _RegisterState extends State<Register> {
                               height: 20,
                             ),
                             TextFormField(
+                              inputFormatters: [
+                                FilteringTextInputFormatter.deny(
+                                    new RegExp(" "))
+                              ],
                               textInputAction: TextInputAction.next,
                               onEditingComplete: () => node.nextFocus(),
                               textCapitalization: TextCapitalization.none,
