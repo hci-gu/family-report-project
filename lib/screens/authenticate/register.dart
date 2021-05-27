@@ -121,6 +121,10 @@ class _RegisterState extends State<Register> {
                               height: 20,
                             ),
                             TextFormField(
+                              inputFormatters: [
+                                FilteringTextInputFormatter.deny(
+                                    new RegExp(" "))
+                              ],
                               textInputAction: TextInputAction.next,
                               onEditingComplete: () => node.nextFocus(),
                               textCapitalization: TextCapitalization.none,
@@ -139,6 +143,10 @@ class _RegisterState extends State<Register> {
                               height: 20,
                             ),
                             TextFormField(
+                              inputFormatters: [
+                                FilteringTextInputFormatter.allow(
+                                    new RegExp(r"[0-9]"))
+                              ],
                               textInputAction: TextInputAction.done,
                               onEditingComplete: () => node.nextFocus(),
                               decoration: InputDecoration(

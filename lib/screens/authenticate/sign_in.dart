@@ -80,6 +80,10 @@ class _SignInState extends State<SignIn> {
                               height: 20,
                             ),
                             TextFormField(
+                              inputFormatters: [
+                                FilteringTextInputFormatter.deny(
+                                    new RegExp(" "))
+                              ],
                               textInputAction: TextInputAction.next,
                               onEditingComplete: () => node.nextFocus(),
                               textCapitalization: TextCapitalization.none,
